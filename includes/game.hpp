@@ -5,6 +5,7 @@
 #include "game_object.hpp"
 #include <vector>
 #include "collision_box.hpp"
+#include "world.hpp"
 
 #define SCORE_MULTIPLIER 1
 #define MAIN_WIN_COLOR 2
@@ -13,8 +14,9 @@ class Game
 {
 private:
 	CollisionBox	bounding_box;
-	uint32_t		offset_y;
+	Position		offset;
 	int				score = 0;
+	World			*world;
 
 	std::vector<GameObject*> objects;
 	std::vector<GameObject*> objects_to_add;
