@@ -20,6 +20,7 @@ std::vector<GameObject*>& Game::getObjects()
 
 void Game::Update()
 {
+    this->score += SCORE_MULTIPLIER;
     for (auto object : this->objects)
     {
         if (object->shouldDelete())
@@ -43,6 +44,7 @@ void Game::Draw()
 {
     for (auto object : this->objects)
         object->draw();
+    mvprintw(LINES - 1, 2, "Score: %d", this->score);
 }
 
 void Game::Tick()

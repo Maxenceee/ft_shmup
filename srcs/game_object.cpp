@@ -15,7 +15,7 @@ GameObject::~GameObject()
 
 bool    GameObject::collidesWith(GameObject *other)
 {
-    if ((this->getPosition().getX() - (this->getBounds().getWidth() / 2) >= other->getPosition().getX()
+    if ((this->getPosition().getX() - 1 >= other->getPosition().getX()
         && this->getPosition().getX() + 1 <= other->getPosition().getX())
         && this->getPosition().getY() == other->getPosition().getY())
         return (true);

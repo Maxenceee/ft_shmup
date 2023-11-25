@@ -1,4 +1,3 @@
-#include <ncurses.h>
 #include "player.hpp"
 #include "game.hpp"
 #include <thread>
@@ -15,16 +14,13 @@ void	init_color_pairs()
 
 int	main(void)
 {
-	Game game(CollisionBox(COLS, LINES));
+	Game game(CollisionBox(COLS, LINES - 1));
 
 	if (!isatty(STDOUT_FILENO))
 	{
 		std::cerr << "Invalid stdand out" << std::endl;
 		return (1);
 	}
-	game.addObject(new Bullet(Position(1, 1), 1, 0));
-	game.addObject(new Bullet(Position(1, 100), 1, 0));
-	game.addObject(new Bullet(Position(1, LINES - 1), 1, 0));
 	setlocale(LC_ALL, "");
 	game.addObject(new Player(Position(10, 10), 100));
 	WINDOW *win = initscr();
@@ -33,7 +29,7 @@ int	main(void)
 	nodelay(win, true);
 	noecho();
 	curs_set(0);
-	while (1)
+	while (!game.exit)
 	{
 		clear();
 		game.Tick();

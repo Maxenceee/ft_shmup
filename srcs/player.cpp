@@ -37,6 +37,11 @@ void Player::update(Game *game)
 {
     int input = get_key();
 
+    if (input == 27)
+    {
+        game->exit = 1;
+        return;
+    }
     if (input == KEY_UP)
         this->getPosition().setY(this->getPosition().getY() - 1);
     else if (input == KEY_DOWN)
@@ -54,8 +59,8 @@ void Player::update(Game *game)
         this->getPosition().setX(COLS - 2);
     else if (this->getPosition().getY() < 1)
         this->getPosition().setY(1);
-    else if (this->getPosition().getY() > LINES - 1)
-        this->getPosition().setY(LINES - 1);
+    else if (this->getPosition().getY() >= LINES - 1)
+        this->getPosition().setY(LINES - 2);
     
     for (int i = 0; i < game->getObjects().size(); i++)
     {
