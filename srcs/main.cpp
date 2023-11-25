@@ -1,11 +1,26 @@
-#include "player.hpp"
 #include "game.hpp"
-#include <thread>
+#include "player.hpp"
 #include "unistd.h"
 #include "colors.hpp"
 #include <locale.h>
 #include "enemy.hpp"
 #include "bullet.hpp"
+#include "time.hpp"
+#include "mountains.hpp"
+
+int	ft_can_render(void)
+{
+	static time_t	str_time = 0;
+
+	if (str_time == 0)
+		str_time = ft_abs_time();
+	if (ft_abs_time() - str_time >= 16)
+	{
+		str_time = ft_abs_time();
+		return (1);
+	}
+	return (0);
+}
 
 void	init_color_pairs()
 {
@@ -31,12 +46,15 @@ int	main(void)
 	nodelay(win, true);
 	noecho();
 	curs_set(0);
+	// Mountains	m(Position(5, 5), CollisionBox(5, 5));
 	while (!game.exit)
 	{
+		if (!ft_can_render())
+			continue ;
 		clear();
 		game.Tick();
+		// m.draw();
 		refresh();
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	}
 	endwin();
 	curs_set(1);
