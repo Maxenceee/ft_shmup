@@ -1,5 +1,5 @@
-#ifndef BULLET_HPP
-# define BULLET_HPP
+#pragma once
+
 # include "game.hpp"
 # include "gameobject.hpp"
 
@@ -18,4 +18,3 @@ public:
 
     int getDamage() const;
 };
-#endif

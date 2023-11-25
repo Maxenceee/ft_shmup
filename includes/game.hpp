@@ -1,5 +1,5 @@
-#ifndef GAME_HPP
-# define GAME_HPP
+#pragma once
+
 # include "gameobject.hpp"
 # include <vector>
 
@@ -16,4 +16,3 @@ public:
 
 	std::vector<GameObject*>& getObjects();
 };
-#endif

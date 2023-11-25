@@ -18,11 +18,12 @@ bool Player::collidesWith(GameObject *other)
     if ((this->getPosition().getX() - 1 >= other->getPosition().getX() && this->getPosition().getX() + 1 <= other->getPosition().getX()) &&
         this->getPosition().getY() == other->getPosition().getY())
         return (true);
+    return (false);
 }
 
 void Player::update(Game *game)
 {
-    int input = ();
+    int input = 0;
 
     if (input == KEY_UP)
         this->getPosition().setY(this->getPosition().getY() - 1);

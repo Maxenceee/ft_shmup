@@ -1,5 +1,5 @@
-#ifndef GAMEOBJECT_HPP
-# define GAMEOBJECT_HPP
+#pragma once
+
 # include "position.hpp"
 
 class Game;
@@ -19,4 +19,4 @@ public:
     virtual bool shouldDelete() = 0;
     Position& getPosition();
 };
-#endif
+
