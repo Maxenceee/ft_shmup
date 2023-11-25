@@ -4,6 +4,7 @@
 #include "unistd.h"
 #include "colors.hpp"
 #include <locale.h>
+#include "enemy.hpp"
 #include "bullet.hpp"
 
 void	init_color_pairs()
@@ -22,7 +23,8 @@ int	main(void)
 		return (1);
 	}
 	setlocale(LC_ALL, "");
-	game.addObject(new Player(Position(10, 10), 100));
+	game.addObject(new Player(Position(10, 10), &game, 100));
+	game.addObject(new Enemy(Position(30, 0), CollisionBox(1, 1), &game, 1, 200));
 	WINDOW *win = initscr();
 	start_color();
 	init_color_pairs();

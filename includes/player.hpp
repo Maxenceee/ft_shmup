@@ -9,10 +9,10 @@ private:
 
 public:
 	Player();
-	Player(Position position, int health);
+	Player(Position position, Game *game, int health);
 	~Player();
 
-	void	update(Game *game) override;
+	void	update() override;
 	void	draw() override;
 	bool	shouldDelete() override;
 

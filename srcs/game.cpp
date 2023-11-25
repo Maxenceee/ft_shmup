@@ -21,15 +21,20 @@ std::vector<GameObject*>& Game::getObjects()
 void Game::Update()
 {
     this->score += SCORE_MULTIPLIER;
-    for (auto object : this->objects)
+
+    auto it = this->objects.begin();
+    while (it != this->objects.end())
     {
-        if (object->shouldDelete())
+        if ((*it)->shouldDelete())
         {
-            this->objects.erase(std::find(this->objects.begin(), this->objects.end(), object));
-            delete object;
+            delete *it;
+            it = this->objects.erase(it);
         }
         else
-            object->update(this);
+        {
+            (*it)->update();
+            ++it;
+        }
     }
     this->getObjects().insert(this->getObjects().end(), this->objects_to_add.begin(), this->objects_to_add.end());
     this->objects_to_add.clear();
@@ -51,4 +56,9 @@ void Game::Tick()
 {
     this->Update();
     this->Draw();
+}
+
+void	Game::addScore(int score)
+{
+    this->score += score;
 }

@@ -28,4 +28,5 @@ public:
 	std::vector<GameObject*>&	getObjects();
 
 	void	addObject(GameObject *obj);
+	void	addScore(int score);
 };
