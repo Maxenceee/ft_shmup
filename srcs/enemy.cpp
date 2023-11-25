@@ -24,21 +24,25 @@ bool Enemy::isEnemy() {
 void Enemy::update()
 {
     this->ticks++;
-    if (ticks % 60 == 0)
+    if (ticks % 15 == 0)
         this->getPosition().setY(this->getPosition().getY() + 1);
     
-    if (ticks % 40 == 0)
+    if (ticks % 30 == 0)
         this->getPosition().setX(this->getPosition().getX() + rand() % 3 - 1);
 }
 
 void Enemy::draw()
 {
-    mvprintw(this->getPosition().getY(), this->getPosition().getX(), "👾");
+    if (this->getPosition().getY() >= this->getGame()->getBounds().getHeight() - 1)
+        return;
+    int x = this->getPosition().getX() + this->getGame()->getPosition().getX();
+    int y = this->getPosition().getY() + this->getGame()->getPosition().getY();
+    mvprintw(y, x, "👾");
 }
 
 bool Enemy::shouldDelete()
 {
-    return (this->health <= 0 || this->getPosition().getY() >= LINES - 1);
+    return (this->health <= 0 || this->getPosition().getY() >= this->getGame()->getBounds().getHeight() - 1);
 }
 
 int Enemy::getReward() const

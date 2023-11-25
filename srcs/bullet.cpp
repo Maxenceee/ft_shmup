@@ -33,15 +33,21 @@ void Bullet::update()
 	}
 }
 void Bullet::draw()
-{  
-	mvprintw(this->getPosition().getY(), this->getPosition().getX(), "|");
+{
+    int x = this->getPosition().getX() + this->getGame()->getPosition().getX();
+    int y = this->getPosition().getY() + this->getGame()->getPosition().getY();
+    mvprintw(y, x, "|");
 }
 
 bool Bullet::shouldDelete()
 {
-	if (this->damage <= 0)
-		return (true);
-	if (this->getPosition().getY() >= LINES)
-		return (true);
-	return (false);
+    if (this->damage <= 0)
+        return (true);
+    if (this->direction < 0 && \
+        this->getPosition().getY() >= this->getGame()->getBounds().getHeight() - 1)
+        return (true);
+    else if (this->direction > 0 && \
+        this->getPosition().getY() < 2)
+        return (true);
+    return (false);
 }

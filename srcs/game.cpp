@@ -1,11 +1,14 @@
 #include "game.hpp"
+#include "colors.hpp"
 #include <algorithm>
 
-Game::Game(CollisionBox bounding_box, uint32_t nb_player)
+Game::Game(CollisionBox bounding_box, Position pos, uint32_t nb_player)
 {
-	this->bounding_box = bounding_box;
-	// this->offset_y = nb_player;
-	this->world = new World(this->offset, CollisionBox(LINES - 4, COLS - 10));
+    this->bounding_box = bounding_box;
+    this->offset = pos;
+    this->player = new Player(Position(bounding_box.getWidth() / 2, bounding_box.getHeight() - 3), this, 3);
+    this->addObject(player);
+    this->world = new World(this->offset, CollisionBox(LINES - 4, COLS - 10));
 }
 
 Game::~Game()
@@ -48,9 +51,15 @@ void    Game::addObject(GameObject *obj)
 
 void Game::Draw()
 {
-	for (auto object : this->objects)
-		object->draw();
-	mvprintw(LINES - 1, 2, "Score: %d", this->score);
+    for (auto object : this->objects)
+        object->draw();
+    attron(COLOR_PAIR(HEARTS_PAIR));
+    for (int i = 0; i < this->player->getHealth(); i++)
+    {
+        mvprintw(LINES - 1, COLS / 2 - 1 + i, "❤️");
+    }
+    attroff(COLOR_PAIR(HEARTS_PAIR));
+    mvprintw(LINES - 1, 2, "Score: %d", this->score);
 }
 
 void Game::Tick()
@@ -63,4 +72,14 @@ void Game::Tick()
 void	Game::addScore(int score)
 {
 	this->score += score;
+}
+
+Position& Game::getPosition()
+{
+    return (this->position);
+}
+
+CollisionBox& Game::getBounds()
+{
+    return (this->bounding_box);
 }

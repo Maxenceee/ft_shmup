@@ -6,6 +6,7 @@ class Player : public GameObject
 {
 private:
 	int health;
+	int invincibility = 0;
 
 public:
 	Player();

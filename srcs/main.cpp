@@ -27,6 +27,7 @@ void	init_color_pairs()
 	// player 
 	init_pair(PLAYER_PAIR, COLOR_GREEN, COLOR_BLACK);
 	init_pair(MAIN_WIN_COLOR, COLOR_WHITE, COLOR_BLACK);
+	init_pair(HEARTS_PAIR, COLOR_RED, COLOR_BLACK);
 }
 
 int	main(void)
@@ -47,11 +48,8 @@ int	main(void)
 	WINDOW *win_box = subwin(stdscr, LINES - 4, COLS - 10, 2, 5);
 
 	Game game(CollisionBox(COLS, LINES - 1));
-
 	game.addObject(new Player(Position(10, 10), &game, 100));
 	game.addObject(new Enemy(Position(30, 0), CollisionBox(1, 1), &game, 1, 200));
-	// wbkgd(win, COLOR_PAIR(MAIN_WIN_COLOR));
-	// World	m(Position(5, 5), CollisionBox(5, 5));
 	while (!game.exit)
 	{
 		if (!ft_can_render())
