@@ -8,20 +8,23 @@ class Game;
 class GameObject
 {
 private:
-    CollisionBox	bounding_box;
+    CollisionBox    bounding_box;
     Position        position;
+    Game            *game;
 
 public:
     GameObject();
-    GameObject(Position position, CollisionBox bounding_box);
+    GameObject(Position position, CollisionBox bounding_box, Game *game);
     virtual ~GameObject();
 
-    virtual void    update(Game *game) = 0;
+    virtual void    update() = 0;
     virtual void    draw() = 0;
 
     virtual bool    shouldDelete() = 0;
+    virtual bool isEnemy();
+    bool collidesWith(GameObject *other);
     Position&       getPosition();
     CollisionBox&   getBounds();
-    bool collidesWith(GameObject *other);
+    Game *getGame() const;
 };
 
