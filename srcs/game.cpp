@@ -74,9 +74,9 @@ void	Game::addScore(int score)
 	this->score += score;
 }
 
-Position& Game::getPosition()
+Position& Game::getOffset()
 {
-    return (this->position);
+    return (this->offset);
 }
 
 CollisionBox& Game::getBounds()

@@ -1,5 +1,6 @@
 {
 	"files.associations": {
+		"*.ejs": "html",
 		"array": "cpp",
 		"atomic": "cpp",
 		"bit": "cpp",
@@ -51,6 +52,7 @@
 		"streambuf": "cpp",
 		"thread": "cpp",
 		"typeinfo": "cpp",
-		"iostream": "cpp"
+		"iostream": "cpp",
+		"__node_handle": "cpp"
 	}
 }

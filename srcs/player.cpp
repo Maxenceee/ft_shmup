@@ -35,9 +35,8 @@ Player::~Player()
 
 void Player::update()
 {
-  if (invincibility > 0)
-    invincibility--;
-  int input = get_key();
+	if (invincibility > 0)
+		invincibility--;
 	int input = get_key();
 
 	while (input != ERR) {
@@ -94,8 +93,8 @@ void Player::draw()
 {
     if (invincibility > 0 && invincibility % 2 == 0)
         return;
-    int x = this->getPosition().getX() + this->getGame()->getPosition().getX();
-    int y = this->getPosition().getY() + this->getGame()->getPosition().getY();
+    int x = this->getPosition().getX() + this->getGame()->getOffset().getX();
+    int y = this->getPosition().getY() + this->getGame()->getOffset().getY();
 
 	attron(COLOR_PAIR(PLAYER_PAIR));
 	mvprintw(y, x, "🛸");

@@ -35,8 +35,8 @@ void Enemy::draw()
 {
     if (this->getPosition().getY() >= this->getGame()->getBounds().getHeight() - 1)
         return;
-    int x = this->getPosition().getX() + this->getGame()->getPosition().getX();
-    int y = this->getPosition().getY() + this->getGame()->getPosition().getY();
+    int x = this->getPosition().getX() + this->getGame()->getOffset().getX();
+    int y = this->getPosition().getY() + this->getGame()->getOffset().getY();
     mvprintw(y, x, "👾");
 }
 

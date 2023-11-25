@@ -47,7 +47,7 @@ int	main(void)
 	std::srand(time(nullptr));
 	WINDOW *win_box = subwin(stdscr, LINES - 4, COLS - 10, 2, 5);
 
-	Game game(CollisionBox(COLS, LINES - 1));
+	Game game(CollisionBox(COLS, LINES - 1), Position(2, 5));
 	game.addObject(new Player(Position(10, 10), &game, 100));
 	game.addObject(new Enemy(Position(30, 0), CollisionBox(1, 1), &game, 1, 200));
 	while (!game.exit)
