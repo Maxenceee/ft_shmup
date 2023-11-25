@@ -5,7 +5,7 @@ SRCS			=	$(shell find $(SRCS_DIR) -name "*.cpp")
 
 CFLAGS			=	-MMD -MP -I includes
 
-OUTDIR			=	.obj
+OUTDIR			=	.objs
 OBJECTS			=	$(patsubst $(SRCS_DIR)%.cpp, $(OUTDIR)%.o, $(SRCS))
 
 DEPS_FILES		=	${OBJECTS:.o=.d}
