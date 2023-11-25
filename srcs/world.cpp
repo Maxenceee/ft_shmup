@@ -1,16 +1,16 @@
-#include "mountains.hpp"
+#include "world.hpp"
 
-Mountains::Mountains(Position pos, CollisionBox bounds): position(pos), bounds(bounds)
+World::World(Position pos, CollisionBox bounds): position(pos), bounds(bounds)
 {
 	this->map = std::vector<std::vector<int>>(bounds.getHeight());
 	std::fill(this->map.begin(), this->map.end(), std::vector<int>(bounds.getWidth(), 1));
 }
 
-Mountains::~Mountains()
+World::~World()
 {
 }
 
-void	Mountains::draw()
+void	World::draw()
 {
 	int	y = this->position.getY();
 

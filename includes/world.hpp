@@ -6,7 +6,7 @@
 #include <vector>
 #include <ncurses.h>
 
-class Mountains
+class World
 {
 private:
 	Position		position;
@@ -15,8 +15,8 @@ private:
 	std::vector<std::vector<int>>	map;
 
 public:
-	Mountains(Position pos, CollisionBox bounds);
-	~Mountains();
+	World(Position pos, CollisionBox bounds);
+	~World();
 
 	void	draw();
 };

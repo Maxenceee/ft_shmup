@@ -7,6 +7,7 @@
 #include "collision_box.hpp"
 
 #define SCORE_MULTIPLIER 1
+#define MAIN_WIN_COLOR 2
 
 class Game
 {
