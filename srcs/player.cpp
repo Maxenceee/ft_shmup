@@ -23,7 +23,7 @@ int get_key()
 
 Player::Player() : GameObject(Position(0, 0), CollisionBox(5, 3), nullptr)
 {
-    this->health = 100;
+    this->health = 3;
 }
 Player::Player(Position position, Game *game, int health) : GameObject(position, CollisionBox(5, 3), game)
 {
@@ -35,6 +35,8 @@ Player::~Player()
 
 void Player::update()
 {
+    if (invincibility > 0)
+        invincibility--;
     int input = get_key();
 
     while (input != ERR) {
@@ -56,19 +58,24 @@ void Player::update()
 
         if (this->getPosition().getX() < 1)
             this->getPosition().setX(1);
-        else if (this->getPosition().getX() > COLS - 2)
-            this->getPosition().setX(COLS - 2);
+        else if (this->getPosition().getX() >= this->getGame()->getBounds().getWidth() - 2)
+            this->getPosition().setX(this->getGame()->getBounds().getWidth() - 3);
         else if (this->getPosition().getY() < 1)
             this->getPosition().setY(1);
-        else if (this->getPosition().getY() >= LINES - 1)
-            this->getPosition().setY(LINES - 2);
+        else if (this->getPosition().getY() >= this->getGame()->getBounds().getHeight() - 1)
+            this->getPosition().setY(this->getGame()->getBounds().getHeight() - 2);
         
-        for (int i = 0; i < this->getGame()->getObjects().size(); i++)
+        if (invincibility == 0)
         {
-            if (this->collidesWith(this->getGame()->getObjects()[i]) && this != this->getGame()->getObjects()[i])
+            for (int i = 0; i < this->getGame()->getObjects().size(); i++)
             {
-                this->health -= 10;
-                this->getGame()->getObjects()[i]->getPosition().setY(-1);
+                if (this->collidesWith(this->getGame()->getObjects()[i]) && this != this->getGame()->getObjects()[i])
+                {
+                    this->health -= 1;
+                    invincibility = 24;
+                    this->getGame()->getObjects()[i]->getPosition().setY(-1);
+                    break;
+                }
             }
         }
         input = get_key();
@@ -84,8 +91,10 @@ bool Player::shouldDelete()
 
 void Player::draw()
 {
-    int x = this->getPosition().getX();
-    int y = this->getPosition().getY();
+    if (invincibility > 0 && invincibility % 2 == 0)
+        return;
+    int x = this->getPosition().getX() + this->getGame()->getPosition().getX();
+    int y = this->getPosition().getY() + this->getGame()->getPosition().getY();
 
     attron(COLOR_PAIR(PLAYER_PAIR));
     mvprintw(y, x, "🛸");
@@ -101,4 +110,8 @@ void    Player::shoot(Game *game)
     int y = this->getPosition().getY();
 
     game->addObject(new Bullet(Position(x, y - 1), game, 1));
+}
+int		Player::getHealth() const
+{
+    return (this->health);
 }
