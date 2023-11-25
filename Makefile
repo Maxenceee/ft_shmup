@@ -3,7 +3,7 @@ NAME			=	ft_shmup
 SRCS_DIR 		=	srcs
 SRCS			=	$(shell find $(SRCS_DIR) -name "*.cpp")
 
-CFLAGS			=	-MMD -MP -I includes
+CFLAGS			=	-MMD -MP -I includes -g3
 
 OUTDIR			=	.objs
 OBJECTS			=	$(patsubst $(SRCS_DIR)%.cpp, $(OUTDIR)%.o, $(SRCS))
@@ -22,11 +22,11 @@ all: $(NAME)
 
 -include $(DEPS_FILES)
 
-${NAME}: $(OBJECTS)
-	@c++ $(CFLAGS) -lncurses -o $(NAME) $(OBJECTS)
+${NAME}: $(OBJECTS) 
+	@c++ $(CFLAGS) -lncursesw -o $(NAME) $(OBJECTS)
 	@echo "$(GREEN)$(NAME) compiled!$(DEFAULT)"
 
-$(OUTDIR)/%.o: $(SRCS_DIR)/%.cpp | $(OUTDIR)
+$(OUTDIR)/%.o: $(SRCS_DIR)/%.cpp Makefile | $(OUTDIR)
 	@echo "$(YELLOW)Compiling [$<]$(DEFAULT)"
 	@c++ $(CFLAGS) -o $@ -c $<
 	@printf ${UP}${CUT}

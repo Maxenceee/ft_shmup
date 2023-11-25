@@ -1,15 +1,16 @@
 #pragma once
 
 # include "game.hpp"
-# include "gameobject.hpp"
+# include "game_object.hpp"
 
 class Bullet : public GameObject
 {
 private:
     int damage;
+    int direction;
 public:
     Bullet();
-    Bullet(Position position, int damage);
+    Bullet(Position position, int damage, int dir = 1);
     ~Bullet();
 
     void update(Game *game) override;

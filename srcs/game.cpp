@@ -1,8 +1,10 @@
 #include "game.hpp"
 #include <algorithm>
 
-Game::Game()
+Game::Game(CollisionBox bounding_box, uint32_t nb_player)
 {
+    this->bounding_box = bounding_box;
+    this->offset_y = nb_player;
 }
 
 Game::~Game()
@@ -18,15 +20,17 @@ std::vector<GameObject*>& Game::getObjects()
 
 void Game::Update()
 {
-    for (auto object : this->objects)
+    auto iter = this->objects.begin();
+    while (*iter)
     {
-        if (object->shouldDelete())
+        if ((*iter)->shouldDelete())
         {
-            this->objects.erase(std::find(this->objects.begin(), this->objects.end(), object));
-            delete object;
+            delete (*iter);
+            iter = this->objects.erase(std::find(this->objects.begin(), this->objects.end(), (*iter)));
         }
         else
-            object->update(this);
+            (*iter)->update(this);
+        iter++;
     }
 }
 

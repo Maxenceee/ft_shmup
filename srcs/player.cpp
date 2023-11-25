@@ -1,29 +1,41 @@
 #include "player.hpp"
 #include "game.hpp"
 #include <ncurses.h>
+#include "colors.hpp"
+#include "bullet.hpp"
 
-Player::Player() : GameObject(Position(0, 0))
+int get_key()
+{
+    int input = getch();
+    if (input == '\033')
+    {
+        getch();
+        switch (getch())
+        {
+        case 'A': return (KEY_UP);
+        case 'B': return (KEY_DOWN);
+        case 'C': return (KEY_RIGHT);
+        case 'D': return (KEY_LEFT);
+        }
+    }
+    return (input);
+}
+
+Player::Player() : GameObject(Position(0, 0), CollisionBox(5, 3))
 {
     this->health = 100;
 }
-Player::Player(Position position, int health) : GameObject(position)
+Player::Player(Position position, int health) : Player()
 {
     this->health = health;
 }
 Player::~Player()
 {
 }
-bool Player::collidesWith(GameObject *other)
-{
-    if ((this->getPosition().getX() - 1 >= other->getPosition().getX() && this->getPosition().getX() + 1 <= other->getPosition().getX()) &&
-        this->getPosition().getY() == other->getPosition().getY())
-        return (true);
-    return (false);
-}
 
 void Player::update(Game *game)
 {
-    int input = 0;
+    int input = get_key();
 
     if (input == KEY_UP)
         this->getPosition().setY(this->getPosition().getY() - 1);
@@ -33,6 +45,8 @@ void Player::update(Game *game)
         this->getPosition().setX(this->getPosition().getX() - 1);
     else if (input == KEY_RIGHT)
         this->getPosition().setX(this->getPosition().getX() + 1);
+    else if (input == ' ')
+        this->shoot(game);
 
     if (this->getPosition().getX() < 1)
         this->getPosition().setX(1);
@@ -45,7 +59,7 @@ void Player::update(Game *game)
     
     for (int i = 0; i < game->getObjects().size(); i++)
     {
-        if (this->collidesWith(game->getObjects()[i]))
+        if (this->collidesWith(game->getObjects()[i]) && this != game->getObjects()[i])
         {
             this->health -= 10;
             game->getObjects()[i]->getPosition().setY(-1);
@@ -62,5 +76,21 @@ bool Player::shouldDelete()
 
 void Player::draw()
 {
-    mvprintw(this->getPosition().getY(), this->getPosition().getX() - 1, "<o>");
+    int x = this->getPosition().getX();
+    int y = this->getPosition().getY();
+
+    attron(COLOR_PAIR(PLAYER_PAIR));
+    mvprintw(y, x, "🛸");
+    // mvprintw(y - 1, x, "_");
+    // mvprintw(y, x - 1, "/ \\");
+    // mvprintw(y + 1, x - 2, "<o0o>");
+    attroff(COLOR_PAIR(PLAYER_PAIR));
+}
+
+void    Player::shoot(Game *game)
+{
+    int x = this->getPosition().getX();
+    int y = this->getPosition().getY();
+
+    game->getObjects().push_back(new Bullet(Position(x, y - 1), 1));
 }
