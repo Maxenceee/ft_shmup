@@ -6,6 +6,7 @@
 #include "player.hpp"
 #include <vector>
 #include "collision_box.hpp"
+#include "world.hpp"
 
 #define SCORE_MULTIPLIER 1
 #define MAIN_WIN_COLOR 2
@@ -16,6 +17,7 @@ private:
 	CollisionBox	bounding_box;
 	Position		position;
 	int				score = 0;
+	World			*world;
 
 	Player *player = nullptr;
 	std::vector<GameObject*> objects;

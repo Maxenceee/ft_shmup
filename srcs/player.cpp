@@ -6,19 +6,19 @@
 
 int get_key()
 {
-    int input = getch();
-    if (input == '\033')
-    {
-        getch();
-        switch (getch())
-        {
-        case 'A': return (KEY_UP);
-        case 'B': return (KEY_DOWN);
-        case 'C': return (KEY_RIGHT);
-        case 'D': return (KEY_LEFT);
-        }
-    }
-    return (input);
+	int input = getch();
+	if (input == '\033')
+	{
+		getch();
+		switch (getch())
+		{
+		case 'A': return (KEY_UP);
+		case 'B': return (KEY_DOWN);
+		case 'C': return (KEY_RIGHT);
+		case 'D': return (KEY_LEFT);
+		}
+	}
+	return (input);
 }
 
 Player::Player() : GameObject(Position(0, 0), CollisionBox(5, 3), nullptr)
@@ -27,7 +27,7 @@ Player::Player() : GameObject(Position(0, 0), CollisionBox(5, 3), nullptr)
 }
 Player::Player(Position position, Game *game, int health) : GameObject(position, CollisionBox(5, 3), game)
 {
-    this->health = health;
+	this->health = health;
 }
 Player::~Player()
 {
@@ -35,26 +35,27 @@ Player::~Player()
 
 void Player::update()
 {
-    if (invincibility > 0)
-        invincibility--;
-    int input = get_key();
+  if (invincibility > 0)
+    invincibility--;
+  int input = get_key();
+	int input = get_key();
 
-    while (input != ERR) {
-        if (input == 27)
-        {
-            this->getGame()->exit = 1;
-            return;
-        }
-        if (input == KEY_UP)
-            this->getPosition().setY(this->getPosition().getY() - 1);
-        else if (input == KEY_DOWN)
-            this->getPosition().setY(this->getPosition().getY() + 1);
-        else if (input == KEY_LEFT)
-            this->getPosition().setX(this->getPosition().getX() - 1);
-        else if (input == KEY_RIGHT)
-            this->getPosition().setX(this->getPosition().getX() + 1);
-        else if (input == ' ')
-            this->shoot(this->getGame());
+	while (input != ERR) {
+		if (input == 27)
+		{
+			this->getGame()->exit = 1;
+			return;
+		}
+		if (input == KEY_UP)
+			this->getPosition().setY(this->getPosition().getY() - 1);
+		else if (input == KEY_DOWN)
+			this->getPosition().setY(this->getPosition().getY() + 1);
+		else if (input == KEY_LEFT)
+			this->getPosition().setX(this->getPosition().getX() - 1);
+		else if (input == KEY_RIGHT)
+			this->getPosition().setX(this->getPosition().getX() + 1);
+		else if (input == ' ')
+			this->shoot(this->getGame());
 
         if (this->getPosition().getX() < 1)
             this->getPosition().setX(1);
@@ -84,9 +85,9 @@ void Player::update()
 
 bool Player::shouldDelete()
 {
-    if (this->health <= 0)
-        return (true);
-    return (false);
+	if (this->health <= 0)
+		return (true);
+	return (false);
 }
 
 void Player::draw()
@@ -96,21 +97,22 @@ void Player::draw()
     int x = this->getPosition().getX() + this->getGame()->getPosition().getX();
     int y = this->getPosition().getY() + this->getGame()->getPosition().getY();
 
-    attron(COLOR_PAIR(PLAYER_PAIR));
-    mvprintw(y, x, "🛸");
-    // mvprintw(y - 1, x, "_");
-    // mvprintw(y, x - 1, "/ \\");
-    // mvprintw(y + 1, x - 2, "<o0o>");
-    attroff(COLOR_PAIR(PLAYER_PAIR));
+	attron(COLOR_PAIR(PLAYER_PAIR));
+	mvprintw(y, x, "🛸");
+	// mvprintw(y - 1, x, "_");
+	// mvprintw(y, x - 1, "/ \\");
+	// mvprintw(y + 1, x - 2, "<o0o>");
+	attroff(COLOR_PAIR(PLAYER_PAIR));
 }
 
 void    Player::shoot(Game *game)
 {
-    int x = this->getPosition().getX();
-    int y = this->getPosition().getY();
+	int x = this->getPosition().getX();
+	int y = this->getPosition().getY();
 
     game->addObject(new Bullet(Position(x, y - 1), game, 1));
 }
+
 int		Player::getHealth() const
 {
     return (this->health);
