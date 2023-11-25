@@ -12,6 +12,7 @@ private:
 	uint32_t		offset_y;
 
 	std::vector<GameObject*> objects;
+	std::vector<GameObject*> objects_to_add;
 	void Update();
 	void Draw();
 public:
@@ -19,5 +20,7 @@ public:
 	~Game();
 	void Tick();
 
-	std::vector<GameObject*>& getObjects();
+	std::vector<GameObject*>&	getObjects();
+
+	void	addObject(GameObject *obj);
 };

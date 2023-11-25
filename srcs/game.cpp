@@ -20,25 +20,23 @@ std::vector<GameObject*>& Game::getObjects()
 
 void Game::Update()
 {
-    // this->objects.erase(std::remove_if(this->objects.begin(), this->objects.end(), [] (GameObject *obj) {
-    //     if (obj->shouldDelete())
-    //     {
-    //         delete (obj);
-    //         return (true);
-    //     }
-    //     return (false);
-    // }));
-    auto iter = this->objects.begin();
-    while (iter != this->objects.end())
+    for (auto object : this->objects)
     {
-        if ((*iter)->shouldDelete())
+        if (object->shouldDelete())
         {
-            delete (*iter);
-            iter = this->objects.erase(iter);
+            this->objects.erase(std::find(this->objects.begin(), this->objects.end(), object));
+            delete object;
         }
         else
-            (*iter++)->update(this);
+            object->update(this);
     }
+    this->getObjects().insert(this->getObjects().end(), this->objects_to_add.begin(), this->objects_to_add.end());
+    this->objects_to_add.clear();
+}
+
+void    Game::addObject(GameObject *obj)
+{
+    this->objects_to_add.push_back(obj);
 }
 
 void Game::Draw()

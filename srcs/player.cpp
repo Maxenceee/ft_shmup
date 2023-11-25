@@ -25,7 +25,7 @@ Player::Player() : GameObject(Position(0, 0), CollisionBox(5, 3))
 {
     this->health = 100;
 }
-Player::Player(Position position, int health) : Player()
+Player::Player(Position position, int health) : GameObject(position, CollisionBox(5, 3))
 {
     this->health = health;
 }
@@ -92,5 +92,5 @@ void    Player::shoot(Game *game)
     int x = this->getPosition().getX();
     int y = this->getPosition().getY();
 
-    game->getObjects().push_back(new Bullet(Position(x, y - 1), 1));
+    game->addObject(new Bullet(Position(x, y - 1), 1));
 }
