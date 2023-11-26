@@ -17,7 +17,6 @@ class World
 {
 private:
 	Position		position;
-	CollisionBox	bounds;
 	uint64_t		ticks;
 	int				rock_factor = 1000;
 	Game			*game;
@@ -30,7 +29,7 @@ private:
 	bool	parse_rocks(std::string path);
 
 public:
-	World(Game *game, Position pos, CollisionBox bounds);
+	World(Game *game, Position pos);
 	~World();
 
 	bool	init();

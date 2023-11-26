@@ -4,10 +4,10 @@
 class HatcherEnemy : public Enemy
 {
 public:
-    HatcherEnemy();
-    HatcherEnemy(Position position, Game *game, int health);
-    ~HatcherEnemy();
+	HatcherEnemy();
+	HatcherEnemy(Position position, Game *game, int health);
+	~HatcherEnemy();
 
-    void update() override;
-    void draw() override;
+	void update() override;
+	void draw() override;
 };

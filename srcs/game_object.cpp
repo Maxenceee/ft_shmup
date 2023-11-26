@@ -12,6 +12,7 @@ GameObject::GameObject(Position position, CollisionBox bounding_box, Game *game)
 	this->position = position;
 	this->game = game;
 }
+
 GameObject::~GameObject()
 {
 }

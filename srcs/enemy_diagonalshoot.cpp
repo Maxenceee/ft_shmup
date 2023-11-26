@@ -15,7 +15,7 @@ DiagonalShootingEnemy::~DiagonalShootingEnemy()
 {
 }
 
-void DiagonalShootingEnemy::update()
+void	DiagonalShootingEnemy::update()
 {
 	Enemy::update();
 	if (ticks % 60 == 0)
@@ -30,7 +30,7 @@ void DiagonalShootingEnemy::update()
 	}
 }
 
-void DiagonalShootingEnemy::draw()
+void	DiagonalShootingEnemy::draw()
 {
 	if (this->getPosition().getX() < 0 || this->getPosition().getX() >= this->getGame()->getBounds().getWidth())
 		return ;

@@ -1,7 +1,7 @@
 #include "world.hpp"
 #include "game.hpp"
 
-World::World(Game *game, Position pos, CollisionBox bounds): game(game), position(pos), bounds(bounds)
+World::World(Game *game, Position pos): game(game), position(pos)
 {
 	this->ticks = 0;
 }
@@ -78,6 +78,34 @@ void	World::update()
 
 void	World::renderStars()
 {
+	for (int y = 0; y < this->game->getOffset().getY(); y++)
+	{
+		for (int x = 0; x < COLS; x++)
+		{
+			mvprintw(y, x, ".");
+		}
+	}
+	for (int y = 0; y < LINES; y++)
+	{
+		for (int x = 0; x < this->game->getOffset().getX(); x++)
+		{
+			mvprintw(y, x, ".");
+		}
+	}
+	for (int y = 0; y < this->game->getOffset().getY(); y++)
+	{
+		for (int x = 0; x < COLS; x++)
+		{
+			mvprintw(this->game->getBounds().getHeight() + this->game->getOffset().getY() + y, x, ".");
+		}
+	}
+	for (int y = 0; y < LINES; y++)
+	{
+		for (int x = 0; x < this->game->getOffset().getX(); x++)
+		{
+			mvprintw(y, this->game->getBounds().getWidth() + this->game->getOffset().getX() + x, ".");
+		}
+	}
 	for (int i = this->game->getOffset().getX() + 1; i < COLS - this->game->getOffset().getX() * 2; i++)
 	{
 		if (1 + std::rand() / ((RAND_MAX + 1u) / 1000) == 1)
@@ -86,7 +114,7 @@ void	World::renderStars()
 	auto it = this->stars.begin();
 	while (it != this->stars.end())
 	{
-		if ((*it)->getY() >= this->bounds.getHeight())
+		if ((*it)->getY() >= this->game->getBounds().getHeight())
 		{
 			delete *it;
 			it = this->stars.erase(it);	

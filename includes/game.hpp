@@ -25,10 +25,12 @@ private:
 
 	CollisionBox	bounding_box;
 	Position		offset;
+	Position		dims;
 	int				score = 0;
 	int				tick = 0;
 	std::string		exit_message;
-	std::chrono::steady_clock::time_point begin;
+
+	std::chrono::steady_clock::time_point	begin;
 
 	Player					*player = nullptr;
 	std::vector<GameObject*> objects;
@@ -38,7 +40,7 @@ private:
 	void	Draw();
 
 public:
-	Game(CollisionBox bounding_box, Position pos);
+	Game(CollisionBox bounding_box, Position pos, Position dims);
 	~Game();
 
 	void	Tick();
@@ -61,4 +63,5 @@ public:
 	void	setExitMessage(std::string message);
 	void	startGame();
 	void	stopGame();
+	bool	checkDims(Position ndims);
 };

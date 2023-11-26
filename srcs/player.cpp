@@ -14,8 +14,6 @@ Player::Player(Position position, Game *game, int health) : Shooter(position, Co
 }
 Player::~Player()
 {
-	// if (this->getGame()->getPlayer() == this)
-	// 	this->getGame()->exit = 1;
 }
 
 void Player::update()
@@ -78,8 +76,5 @@ void Player::draw()
 
 	attron(COLOR_PAIR(PLAYER_PAIR));
 	mvprintw(y, x, "🛸");
-	// mvprintw(y - 1, x, "_");
-	// mvprintw(y, x - 1, "/ \\");
-	// mvprintw(y + 1, x - 2, "<o0o>");
 	attroff(COLOR_PAIR(PLAYER_PAIR));
 }

@@ -17,7 +17,7 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::update()
+void	Enemy::update()
 {
 	Shooter::update();
 	this->ticks++;
@@ -35,7 +35,7 @@ void Enemy::update()
 	}
 }
 
-void Enemy::draw()
+void	Enemy::draw()
 {
 	if (this->getPosition().getX() < 1 || this->getPosition().getX() >= this->getGame()->getBounds().getWidth())
 		return ;
@@ -46,7 +46,7 @@ void Enemy::draw()
 	mvprintw(y, x, "👾");
 }
 
-bool Enemy::shouldDelete()
+bool	Enemy::shouldDelete()
 {
 	return (this->health <= 0 || this->getPosition().getY() >= this->getGame()->getBounds().getHeight() - 2);
 }

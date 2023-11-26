@@ -50,16 +50,22 @@ int	main(void)
 	std::srand(time(nullptr));
 	win_box = subwin(stdscr, LINES - 4, COLS - 10, 2, 5);
 
-	Game game(CollisionBox(COLS - 10, LINES - 4), Position(5, 2));
+	Game game(CollisionBox(COLS - 10, LINES - 4), Position(5, 2), Position(COLS, LINES));
 	while (!game.exit)
 	{
 		if (!ft_can_render())
 			continue ;
 		clear();
 		box(win_box, ACS_VLINE, ACS_HLINE);
+		if (game.checkDims(Position(COLS, LINES)))
+		{
+			delwin(win_box);
+			win_box = subwin(stdscr, LINES - 4, COLS - 10, 2, 5);
+		}
 		game.Tick();
 		refresh();
 	}
+	delwin(win_box);
 	delwin(stdscr);
 	endwin();
 	curs_set(1);

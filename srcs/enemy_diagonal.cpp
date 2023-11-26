@@ -17,7 +17,7 @@ DiagonalEnemy::~DiagonalEnemy()
 {
 }
 
-void DiagonalEnemy::update()
+void	DiagonalEnemy::update()
 {
 	ticks++;
 	if (ticks % 2 == 0)
@@ -29,7 +29,7 @@ void DiagonalEnemy::update()
 		this->direction *= -1;
 }
 
-void DiagonalEnemy::draw()
+void	DiagonalEnemy::draw()
 {
 	if (this->getPosition().getX() < 0 || this->getPosition().getX() >= this->getGame()->getBounds().getWidth())
 		return ;

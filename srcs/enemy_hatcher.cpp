@@ -15,7 +15,7 @@ HatcherEnemy::~HatcherEnemy()
 {
 }
 
-void HatcherEnemy::update()
+void	HatcherEnemy::update()
 {
 	ticks++;
 	if (ticks % 100 == 0 && this->getPosition().getY() > 2)
@@ -38,7 +38,7 @@ void HatcherEnemy::update()
 	}
 }
 
-void HatcherEnemy::draw()
+void	HatcherEnemy::draw()
 {
 	if (this->getPosition().getX() < 0 || this->getPosition().getX() >= this->getGame()->getBounds().getWidth())
 		return ;

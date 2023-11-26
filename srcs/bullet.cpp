@@ -21,7 +21,7 @@ Bullet::~Bullet()
 {
 }
 
-void Bullet::update()
+void	Bullet::update()
 {
 	this->checkCollision();
 	this->getPosition().setX(this->getPosition().getX() + this->direction.getX());
@@ -45,7 +45,7 @@ void	Bullet::checkCollision()
 	}
 }
 
-void Bullet::draw()
+void	Bullet::draw()
 {
 	int x = this->getPosition().getX() + this->getGame()->getOffset().getX();
 	int y = this->getPosition().getY() + this->getGame()->getOffset().getY();
@@ -67,7 +67,7 @@ void Bullet::draw()
 		attroff(COLOR_PAIR(ENEMY_BULLET_PAIR));
 }
 
-bool Bullet::shouldDelete()
+bool	Bullet::shouldDelete()
 {
 	if (this->damage <= 0)
 		return (true);

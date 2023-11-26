@@ -23,11 +23,12 @@ int get_key()
 	return (input);
 }
 
-Game::Game(CollisionBox bounding_box, Position pos)
+Game::Game(CollisionBox bounding_box, Position pos, Position dims)
 {
 	this->bounding_box = bounding_box;
 	this->offset = pos;
-	this->world = new World(this, this->offset, bounding_box);
+	this->dims = dims;
+	this->world = new World(this, this->offset);
 	if (!this->world->init())
 		this->exit = true;
 	this->home = new Home(this);
@@ -102,19 +103,21 @@ void    Game::addObject(GameObject *obj)
 	this->objects_to_add.push_back(obj);
 }
 
-void Game::Draw()
+void	Game::Draw()
 {
-	for (auto object : this->objects)
-		object->draw();
 	if (!this->player)
 		return ;
+	int	max = this->player->getHealth();
+	mvprintw(LINES - 4, (COLS - (1 + (max == 10))) / 2, "[%d]", max);
 	attron(COLOR_PAIR(HEARTS_PAIR));
-	for (int i = 0; i < this->player->getHealth(); i++)
+	mvprintw(LINES - 3, (COLS - max) / 2, " ");
+	for (int i = 1; i < max + 1; i++)
 	{
-		mvprintw(LINES - 3, (COLS - this->player->getHealth()) / 2 + i, "❤️");
+		mvprintw(LINES - 3, (COLS - max) / 2 + i, "❤️");
 	}
+	mvprintw(LINES - 3, (COLS - max) / 2 + max + 1, " ");
 	attroff(COLOR_PAIR(HEARTS_PAIR));
-	mvprintw(LINES - 3, 7, "Score: %d", this->score);
+	mvprintw(LINES - 3, 7, " Score: %d ", this->score);
 	int time = (std::chrono::steady_clock::now() - begin).count() / 1000000000;
 	int	l = [=]()
 	{
@@ -127,10 +130,12 @@ void Game::Draw()
 		}
 		return (m);
 	}();
-	mvprintw(LINES - 3, COLS - (14 + l), "Time: %d", time);
+	mvprintw(LINES - 3, COLS - (16 + l), " Time: %d ", time);
+	for (auto object : this->objects)
+		object->draw();
 }
 
-void Game::Tick()
+void	Game::Tick()
 {
 	if (this->home->isActive())
 	{
@@ -202,6 +207,18 @@ void	Game::spawnEnemies()
 	Enemy *enemy = this->getRandomEnemy();
 	if (enemy)
 		this->addObject(enemy);
+}
+
+bool	Game::checkDims(Position ndims)
+{
+	if (this->dims.getX() != ndims.getX() || this->dims.getY() != ndims.getY())
+	{
+		this->bounding_box = CollisionBox(ndims.getX() - 10, ndims.getY() - 4);
+		this->dims = ndims;
+		this->stopGame();
+		return (true);
+	}
+	return (false);
 }
 
 void	Game::setExitMessage(std::string message)
