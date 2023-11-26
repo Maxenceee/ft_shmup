@@ -14,8 +14,8 @@ Player::Player(Position position, Game *game, int health) : Shooter(position, Co
 }
 Player::~Player()
 {
-	if (this->getGame()->getPlayer() == this)
-		this->getGame()->exit = 1;
+	// if (this->getGame()->getPlayer() == this)
+	// 	this->getGame()->exit = 1;
 }
 
 void Player::update()
@@ -26,7 +26,7 @@ void Player::update()
 	while (input != ERR) {
 		if (input == 27)
 		{
-			this->getGame()->exit = 1;
+			this->getGame()->stopGame();
 			return;
 		}
 		if (input == KEY_UP)

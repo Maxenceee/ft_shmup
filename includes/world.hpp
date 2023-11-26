@@ -22,7 +22,6 @@ private:
 	int				rock_factor = 1000;
 	Game			*game;
 
-	// std::vector<std::vector<int>>	map;
 	std::vector<Position*>	stars;
 	std::vector<Rock *>		rocks;
 

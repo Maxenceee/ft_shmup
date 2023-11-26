@@ -3,12 +3,14 @@
 
 Home::Home(Game *game): game(game)
 {
-	this->buttons.push_back(new HButton("Play", [=]() {this->is_active = false;}));
+	this->buttons.push_back(new HButton("Play", [=]() {this->game->startGame();}));
 	this->buttons.push_back(new HButton("Quit", [=]() {this->game->exit = true;}));
 }
 
 Home::~Home()
 {
+	for (auto b : this->buttons)
+		delete b;
 }
 
 void	Home::update()
@@ -18,12 +20,17 @@ void	Home::update()
 	this->printName(&start);
 	int input = get_key();
 
-	if (input == KEY_UP)
+	if (input == 27)
+	{
+		this->game->exit = 1;
+		return;
+	}
+	else if (input == KEY_UP)
 		this->current = (this->current - 1) % this->buttons.size();
 	else if (input == KEY_DOWN)
 		this->current = (this->current + 1) % this->buttons.size();
-	else if (input == KEY_ENTER)
-		this->buttons[this->current].action();
+	else if (input == '\n')
+		this->buttons[this->current]->action();
 	
 	for (int i = 0; i < this->buttons.size(); i++)
 	{
@@ -64,6 +71,11 @@ bool	Home::isActive()
 	return (this->is_active);
 }
 
+void	Home::setActive(bool active)
+{
+	this->is_active = active;
+}
+
 /**
  *
  * Home Button 
@@ -80,7 +92,7 @@ HButton::~HButton()
 
 void	HButton::action()
 {
-	this.func();
+	this->func();
 }
 
 void	HButton::place(Position pos)
@@ -103,16 +115,11 @@ void	HButton::draw()
 	int	l = this->text.length() + 2;
 	int	y = this->pos.getY();
 
-	// std::cerr << "len " << l << " tex " << this->text << std::endl;
-
-	// std::string	charset;
 	if (this->selected)
 	{
-		// charset = "╔╗║╚╝═";
 		int	x = this->pos.getX();
 		for (int i = 0; i < l + 4; i++)
 		{
-			std::cerr << "i " << i << std::endl;
 			if (i == 0)
 				mvprintw(y, x, "╔");
 			else if (i == l + 3)
@@ -138,11 +145,9 @@ void	HButton::draw()
 	}
 	else 
 	{
-		// charset = "┌┐│└┘─";
 		int	x = this->pos.getX();
 		for (int i = 0; i < l + 4; i++)
 		{
-			std::cerr << "i " << i << std::endl;
 			if (i == 0)
 				mvprintw(y, x, "┌");
 			else if (i == l + 3)
@@ -166,10 +171,4 @@ void	HButton::draw()
 			x++;
 		}
 	}
-	// mvprintw(10, 10, "╔════════╗");
-	// mvprintw(11, 10, "║  Play  ║");
-	// mvprintw(12, 10, "╚════════╝");
-	// mvprintw(15, 10, "┌────────┐");
-	// mvprintw(16, 10, "│  Play  │");
-	// mvprintw(17, 10, "└────────┘");
 }

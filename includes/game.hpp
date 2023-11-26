@@ -28,12 +28,12 @@ private:
 	int				tick = 0;
 	std::string		exit_message;
 
-	Player *player = nullptr;
+	Player					*player = nullptr;
 	std::vector<GameObject*> objects;
 	std::vector<GameObject*> objects_to_add;
 
-	void Update();
-	void Draw();
+	void	Update();
+	void	Draw();
 
 public:
 	Game(CollisionBox bounding_box, Position pos, uint32_t nb_player = 1);
@@ -54,4 +54,6 @@ public:
 	Player*			getPlayer() const;
 	void	printExit();
 	void	setExitMessage(std::string message);
+	void	startGame();
+	void	stopGame();
 };

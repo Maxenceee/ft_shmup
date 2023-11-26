@@ -24,8 +24,6 @@ Game::Game(CollisionBox bounding_box, Position pos, uint32_t nb_player)
 {
 	this->bounding_box = bounding_box;
     this->offset = pos;
-    this->player = new Player(Position(bounding_box.getWidth() / 2, bounding_box.getHeight() - 3), this, 10);
-    this->addObject(player);
     this->world = new World(this, this->offset, bounding_box);
 	if (!this->world->init())
 		this->exit = true;
@@ -34,8 +32,7 @@ Game::Game(CollisionBox bounding_box, Position pos, uint32_t nb_player)
 
 Game::~Game()
 {
-	for (auto object : this->objects)
-		delete object;
+	this->stopGame();
 	delete this->world;
 	delete this->home;
 }
@@ -45,8 +42,30 @@ std::vector<GameObject*>& Game::getObjects()
 	return (this->objects);
 }
 
-void Game::Update()
+void	Game::startGame()
 {
+	this->player = new Player(Position(this->bounding_box.getWidth() / 2, this->bounding_box.getHeight() - 3), this, 10);
+	this->addObject(this->player);
+	this->home->setActive(false);
+}
+
+void	Game::stopGame()
+{
+	for (auto object : this->objects)
+		delete object;
+	for (auto object : this->objects_to_add)
+		delete object;
+	this->objects.clear();
+	this->objects_to_add.clear();
+	this->score = 0;
+	this->tick = 0;
+	this->home->setActive(true);
+}
+
+void	Game::Update()
+{
+	if (this->home->isActive())
+		return ;
 	spawnEnemies();
 	this->score += SCORE_MULTIPLIER;
 
@@ -61,6 +80,8 @@ void Game::Update()
 		else
 		{
 			(*it)->update();
+			if (this->home->isActive())
+				return ;
 			++it;
 		}
 	}

@@ -46,4 +46,5 @@ public:
 
 	void	update();
 	bool	isActive();
+	void	setActive(bool active);
 };

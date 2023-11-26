@@ -34,6 +34,7 @@ void Bullet::update()
 		}
 	}
 }
+
 void Bullet::draw()
 {
     int x = this->getPosition().getX() + this->getGame()->getOffset().getX();

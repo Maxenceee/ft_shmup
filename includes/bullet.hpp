@@ -8,14 +8,15 @@ class Bullet : public GameObject
 private:
     int damage;
     int direction;
+
 public:
     Bullet();
     Bullet(Position position, Game *game, int damage, ObjectTeam team, int dir = 1);
     ~Bullet();
 
-    void update() override;
-    void draw() override;
-    bool shouldDelete() override;
+    void    update() override;
+    void    draw() override;
+    bool    shouldDelete() override;
 
-    int getDamage() const;
+    int     getDamage() const;
 };
