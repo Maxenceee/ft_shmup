@@ -31,12 +31,14 @@ void Enemy::update()
     {
         Position bullet_pos = this->getPosition();
         bullet_pos.setY(bullet_pos.getY() + 1);
-        this->shoot(this->getGame(), bullet_pos, 1, 1);
+        this->shoot(this->getGame(), bullet_pos, 1, Position(0, 1));
     }
 }
 
 void Enemy::draw()
 {
+    if (this->getPosition().getX() < 1 || this->getPosition().getX() >= this->getGame()->getBounds().getWidth())
+        return;
     if (this->getPosition().getY() >= this->getGame()->getBounds().getHeight() - 1)
         return;
     int x = this->getPosition().getX() + this->getGame()->getOffset().getX();
@@ -46,5 +48,5 @@ void Enemy::draw()
 
 bool Enemy::shouldDelete()
 {
-    return (this->health <= 0 || this->getPosition().getY() >= this->getGame()->getBounds().getHeight() - 1);
+    return (this->health <= 0 || this->getPosition().getY() >= this->getGame()->getBounds().getHeight() - 2);
 }

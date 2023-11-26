@@ -2,7 +2,7 @@
 
 std::string	read_file(const fs::path& path)
 {
-	std::cerr << "opening file " << path << std::endl;
+	//std::cerr << "opening file " << path << std::endl;
 	std::ifstream	file(path, std::ios::out);
 
 	if (!file.is_open())

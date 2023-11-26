@@ -48,7 +48,6 @@ int	main(void)
 	WINDOW *win_box = subwin(stdscr, LINES - 4, COLS - 10, 2, 5);
 
 	Game game(CollisionBox(COLS - 10, LINES - 4), Position(5, 2));
-	game.addObject(new Enemy(Position(30, 1), CollisionBox(1, 1), &game, 1, 200));
 	while (!game.exit)
 	{
 		if (!ft_can_render())

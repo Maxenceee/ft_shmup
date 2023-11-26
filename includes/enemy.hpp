@@ -1,8 +1,9 @@
+#pragma once
 #include "shooter.hpp"
 
 class Enemy : public Shooter
 {
-private:
+protected:
     uint64_t ticks = 0;
 public:
 

@@ -58,7 +58,7 @@ void Player::update()
 		{
 			Position bullet_pos = this->getPosition();
 			bullet_pos.setY(bullet_pos.getY() - 1);
-			this->shoot(this->getGame(), bullet_pos, 1, -1);
+			this->shoot(this->getGame(), bullet_pos, 1, Position(0, -1));
 		}
 
         if (this->getPosition().getX() < 1)

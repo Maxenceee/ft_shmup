@@ -46,7 +46,7 @@ bool	World::parse_rocks(std::string path)
 		if (entry.path().extension() != ".sprite")
 			continue ;
 		std::string	buff = read_file(entry.path());
-		std::cerr << buff << std::endl;
+		//std::cerr << buff << std::endl;
 		this->sprites.push_back(buff);
 		i++;
 	}
@@ -71,9 +71,10 @@ void	World::update()
 		if ((*it)->getY() >= this->bounds.getHeight())
 		{
 			delete *it;
-			it = this->stars.erase(it);
+			it = this->stars.erase(it);	
 		}
-		it++;
+		else
+			it++;
 	}
 	for (auto s : this->stars)
 	{

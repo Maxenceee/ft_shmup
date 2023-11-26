@@ -24,5 +24,5 @@ public:
     void    damage(int damage);
     int		getHealth() const;
     int		getKillReward() const;
-    void	shoot(Game *game, Position bullet_pos, int damage, int dir);
+    void	shoot(Game *game, Position bullet_pos, int damage, Position dir);
 };

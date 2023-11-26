@@ -13,6 +13,7 @@ Shooter::Shooter()
 
 Shooter::Shooter(Position position, CollisionBox bounding_box, Game *game, int health, int reset_shootcooldown, ObjectTeam team)
 {
+    this->bounding_box = bounding_box;
     this->position = position;
     this->game = game;
     this->health = health;
@@ -33,14 +34,13 @@ void    Shooter::update()
         this->invincibility--;
         return;
     }
-    for (int i = 0; i < this->getGame()->getObjects().size(); i++)
+    for (unsigned long i = 0; i < this->getGame()->getObjects().size(); i++)
     {
         if (this->getTeam() != this->getGame()->getObjects()[i]->getTeam() 
             && this->collidesWith(this->getGame()->getObjects()[i]) \
             && this->getGame()->getObjects()[i]->isShooter())
         {
             this->damage(1);
-            this->getGame()->getObjects()[i]->getPosition().setY(-1);
             break;
         }
     }
@@ -76,7 +76,7 @@ int     Shooter::getKillReward() const
     return (this->killreward);
 }
 
-void	Shooter::shoot(Game *game, Position bullet_pos, int damage, int dir)
+void	Shooter::shoot(Game *game, Position bullet_pos, int damage, Position dir)
 {
     if (this->shootcooldown == 0)
     {

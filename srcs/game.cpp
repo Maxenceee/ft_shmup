@@ -2,8 +2,11 @@
 #include "colors.hpp"
 #include <algorithm>
 #include "enemy.hpp"
+#include "enemy_diagonal.hpp"
+#include "enemy_diagonalshoot.hpp"
+#include "enemy_hatcher.hpp"
 
-Game::Game(CollisionBox bounding_box, Position pos, uint32_t nb_player)
+Game::Game(CollisionBox bounding_box, Position pos)
 {
 	this->bounding_box = bounding_box;
     this->offset = pos;
@@ -12,6 +15,7 @@ Game::Game(CollisionBox bounding_box, Position pos, uint32_t nb_player)
     this->world = new World(this, this->offset, bounding_box);
 	if (!this->world->init())
 		this->exit = true;
+	begin = std::chrono::steady_clock::now();
 }
 
 Game::~Game()
@@ -64,6 +68,7 @@ void Game::Draw()
     }
     attroff(COLOR_PAIR(HEARTS_PAIR));
     mvprintw(LINES - 1, 2, "Score: %d", this->score);
+    mvprintw(LINES - 1, COLS - 9, "Time: %d", (std::chrono::steady_clock::now() - begin).count() / 1000000000);
 }
 
 void Game::Tick()
@@ -93,18 +98,38 @@ Player* Game::getPlayer() const
 	return (this->player);
 }
 
+Enemy*	Game::getRandomEnemy()
+{
+	int x = rand() % (this->getBounds().getWidth() - 4) + 2;
+	int y = 1;
+	int	factor = this->score > 1700 ? 1700 : (this->score + 1);
+	int	rn = rand() % factor;
+
+	if (rn < 700)
+	{
+		int dir = rand() % 2 == 0 ? 1 : -1;
+		return (new DiagonalEnemy(Position(x, y), this, 1, dir));
+	}
+	else if (rn < 1000)
+		return (new Enemy(Position(x, y), CollisionBox(1, 1), this, 1, 1));
+	else if (rn < 1300)
+		return (new DiagonalShootingEnemy(Position(x, y), this, 1));
+	else if (rn < 1700)
+		return (new HatcherEnemy(Position(x, y), this, 1));
+	return (nullptr);
+}
+
 void	Game::spawnEnemies()
 {
-	if (tick++ != 120)
+	tick++;
+	if (rand() % (score + 20) > tick)
 		return;
-	tick = 0;
-	int nb_enemies = rand() % score / 3000 + 1;
-	for (int i = 0; i < nb_enemies; i++)
-	{
-		int x = rand() % (this->getBounds().getWidth() - 2) + 1;
-		int y = 1;
-		this->addObject(new Enemy(Position(x, y), CollisionBox(1, 1), this, 1, 10));
-	}
+	tick-= 20;
+	if (tick < 0)
+		tick = 0;
+	Enemy *enemy = this->getRandomEnemy();
+	if (enemy)
+		this->addObject(enemy);
 }
 
 void	Game::setExitMessage(std::string message)
