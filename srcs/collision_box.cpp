@@ -4,7 +4,7 @@ CollisionBox::CollisionBox(): width(0), height(0)
 {
 }
 
-CollisionBox::CollisionBox(uint32_t width, uint32_t height)
+CollisionBox::CollisionBox(int width, int height)
 {
 	this->width = width;
 	this->height = height;
@@ -14,12 +14,12 @@ CollisionBox::~CollisionBox()
 {
 }
 
-uint32_t	CollisionBox::getWidth()
+int	CollisionBox::getWidth()
 {
 	return (this->width);
 }
 
-uint32_t	CollisionBox::getHeight()
+int	CollisionBox::getHeight()
 {
 	return (this->height);
 }

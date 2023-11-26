@@ -6,17 +6,19 @@
 class Bullet : public GameObject
 {
 private:
-    int damage;
-    int direction;
+	int			damage;
+	Position	direction;
 
 public:
-    Bullet();
-    Bullet(Position position, Game *game, int damage, ObjectTeam team, int dir = 1);
-    ~Bullet();
+	Bullet();
+	Bullet(Position position, Game *game, int damage, ObjectTeam team, Position dir = Position(0, 1));
+	~Bullet();
 
-    void    update() override;
-    void    draw() override;
-    bool    shouldDelete() override;
+	void	update() override;
+	void	draw() override;
+	bool	shouldDelete() override;
 
-    int     getDamage() const;
+	void	checkCollision();
+
+	int		getDamage() const;
 };

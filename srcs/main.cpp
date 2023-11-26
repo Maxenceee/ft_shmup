@@ -33,6 +33,8 @@ void	init_color_pairs()
 
 int	main(void)
 {
+	WINDOW *win_box;
+
 	if (!isatty(STDOUT_FILENO))
 	{
 		std::cerr << "Invalid stdand out" << std::endl;
@@ -46,10 +48,9 @@ int	main(void)
 	noecho();
 	curs_set(0);
 	std::srand(time(nullptr));
-	WINDOW *win_box = subwin(stdscr, LINES - 4, COLS - 10, 2, 5);
+	win_box = subwin(stdscr, LINES - 4, COLS - 10, 2, 5);
 
 	Game game(CollisionBox(COLS - 10, LINES - 4), Position(5, 2));
-	game.addObject(new Enemy(Position(30, 1), CollisionBox(1, 1), &game, 1, 200));
 	while (!game.exit)
 	{
 		if (!ft_can_render())

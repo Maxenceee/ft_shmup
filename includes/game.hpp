@@ -4,6 +4,7 @@
 #include <iostream>
 #include "game_object.hpp"
 #include "player.hpp"
+#include "enemy.hpp"
 #include <vector>
 #include "collision_box.hpp"
 #include "world.hpp"
@@ -27,6 +28,7 @@ private:
 	int				score = 0;
 	int				tick = 0;
 	std::string		exit_message;
+	std::chrono::steady_clock::time_point begin;
 
 	Player					*player = nullptr;
 	std::vector<GameObject*> objects;
@@ -36,14 +38,16 @@ private:
 	void	Draw();
 
 public:
-	Game(CollisionBox bounding_box, Position pos, uint32_t nb_player = 1);
+	Game(CollisionBox bounding_box, Position pos);
 	~Game();
 
 	void	Tick();
 	bool	exit = false;
+	int		lastScore = 0;
 
 	std::vector<GameObject*>&	getObjects();
 
+	Enemy*	getRandomEnemy();
 	void	spawnEnemies();
 
 	void	addObject(GameObject *obj);
@@ -52,6 +56,7 @@ public:
 	CollisionBox&	getBounds();
 	Position&		getOffset();
 	Player*			getPlayer() const;
+	Home*			getHome() const;
 	void	printExit();
 	void	setExitMessage(std::string message);
 	void	startGame();

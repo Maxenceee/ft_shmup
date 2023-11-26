@@ -14,4 +14,5 @@ public:
 	void	update() override;
 	void	draw() override;
 	bool	shouldDelete() override;
+	void    damage(int damage) override;
 };

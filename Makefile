@@ -3,6 +3,7 @@ NAME			=	ft_shmup
 SRCS_DIR 		=	srcs
 SRCS			=	$(shell find $(SRCS_DIR) -name "*.cpp")
 
+CFLAGS			=	-MMD -Wall -Wextra -Werror -MP -I includes -g3 -std=c++17
 
 OUTDIR			=	.objs
 OBJECTS			=	$(patsubst $(SRCS_DIR)%.cpp, $(OUTDIR)%.o, $(SRCS))

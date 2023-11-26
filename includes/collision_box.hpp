@@ -5,15 +5,15 @@
 class CollisionBox
 {
 private:
-	uint32_t width;
-	uint32_t height;
+	int width;
+	int height;
 
 public:
 	CollisionBox();
-	CollisionBox(uint32_t width, uint32_t height);
+	CollisionBox(int width, int height);
 	~CollisionBox();
 
-	uint32_t	getWidth();
-	uint32_t	getHeight();
+	int	getWidth();
+	int	getHeight();
 };
 

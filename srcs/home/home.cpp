@@ -15,7 +15,7 @@ Home::~Home()
 
 void	Home::update()
 {
-	int	start = 20;
+	int	start = LINES * 25 / 100;
 
 	this->printName(&start);
 	int input = get_key();
@@ -23,7 +23,7 @@ void	Home::update()
 	if (input == 27)
 	{
 		this->game->exit = 1;
-		return;
+		return ;
 	}
 	else if (input == KEY_UP)
 		this->current = (this->current - 1) % this->buttons.size();
@@ -50,7 +50,16 @@ void	Home::printName(int *y)
 	mvprintw(*y + 4, x, "| |     | | /\\__/ / | | || |  | | |_| | |");
 	mvprintw(*y + 5, x, "\\_|     \\_/ \\____/\\_| |_/\\_|  |_/\\___/\\_|");
 	attroff(COLOR_PAIR(HOME_TITLE));
-	(*y) += 15;
+	(*y) += 5;
+	if (this->game->lastScore > 0)
+	{
+		int	p = LINES * 5 / 100;
+		(*y) += p;
+		mvprintw(*y, x, "Last score: %d", this->game->lastScore);
+		(*y) += LINES * 15 / 100 - p;
+	}
+	else
+		(*y) += LINES * 15 / 100;
 }
 
 void	Home::placeButtons(int *y)
@@ -62,7 +71,8 @@ void	Home::placeButtons(int *y)
 		x = (COLS - b->getSize()) / 2;
 		b->place(Position(x, *y));
 		b->draw();
-		(*y) += 5;
+		(*y) += 3;
+		(*y) += LINES * 5 / 100;
 	}
 }
 
