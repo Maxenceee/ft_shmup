@@ -20,7 +20,7 @@ bool	World::init()
 	}
 	for (int y = 0; y < LINES; y++)
 	{
-		for (int i = 0; i < COLS; i++)
+		for (int i = this->game->getOffset().getX() + 1; i < COLS - this->game->getOffset().getX() * 2; i++)
 		{
 			if (1 + std::rand() / ((RAND_MAX + 1u) / 100) == 1)
 				this->stars.push_back(new Position(i, y));
@@ -60,11 +60,10 @@ bool	World::parse_rocks(std::string path)
 
 void	World::update()
 {
-	for (int i = 0; i < COLS - this->game->getOffset().getY() * 2; i++)
+	for (int i = this->game->getOffset().getX() + 1; i < COLS - this->game->getOffset().getX() * 2; i++)
 	{
-		// std::cerr << 1 + std::rand() / ((RAND_MAX + 1u) / 50) << std::endl;
 		if (1 + std::rand() / ((RAND_MAX + 1u) / 1000) == 1)
-			this->stars.push_back(new Position(i, 0));
+			this->stars.push_back(new Position(i, this->game->getOffset().getY() + 1));
 	}
 	auto it = this->stars.begin();
 	while (it != this->stars.end())
