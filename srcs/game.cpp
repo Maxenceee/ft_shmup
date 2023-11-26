@@ -216,7 +216,7 @@ void	Game::spawnEnemies()
 
 void	Game::spawnBoss()
 {
-	if (!this->has_boss && this->score % 100 == 1 && this->score > 100)
+	if (!this->has_boss && this->score % 3000 == 1 && this->score > 100)
 	{
 		this->current_boss = new Boss(this, this->boss_buff, 1, this->score / 100);
 		this->addObject(this->current_boss);
