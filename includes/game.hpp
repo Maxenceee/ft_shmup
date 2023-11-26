@@ -7,19 +7,24 @@
 #include <vector>
 #include "collision_box.hpp"
 #include "world.hpp"
+#include "home.hpp"
 
 #define	SCORE_MULTIPLIER 1
 #define MAIN_WIN_COLOR 2
 
 #define B_RED		"\033[1;31m"
 
+int		get_key();
+
 class Game
 {
 private:
+	World			*world;
+	Home			*home;
+
 	CollisionBox	bounding_box;
 	Position		offset;
 	int				score = 0;
-	World			*world;
 	int				tick = 0;
 	std::string		exit_message;
 

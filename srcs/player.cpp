@@ -4,23 +4,6 @@
 #include "colors.hpp"
 #include "bullet.hpp"
 
-int get_key()
-{
-	int input = getch();
-	if (input == '\033')
-	{
-		getch();
-		switch (getch())
-		{
-		case 'A': return (KEY_UP);
-		case 'B': return (KEY_DOWN);
-		case 'C': return (KEY_RIGHT);
-		case 'D': return (KEY_LEFT);
-		}
-	}
-	return (input);
-}
-
 Player::Player() : Shooter()
 {
     this->team = ObjectTeam::PLAYER;

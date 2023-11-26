@@ -3,6 +3,23 @@
 #include <algorithm>
 #include "enemy.hpp"
 
+int get_key()
+{
+	int input = getch();
+	if (input == '\033')
+	{
+		getch();
+		switch (getch())
+		{
+		case 'A': return (KEY_UP);
+		case 'B': return (KEY_DOWN);
+		case 'C': return (KEY_RIGHT);
+		case 'D': return (KEY_LEFT);
+		}
+	}
+	return (input);
+}
+
 Game::Game(CollisionBox bounding_box, Position pos, uint32_t nb_player)
 {
 	this->bounding_box = bounding_box;
@@ -12,12 +29,15 @@ Game::Game(CollisionBox bounding_box, Position pos, uint32_t nb_player)
     this->world = new World(this, this->offset, bounding_box);
 	if (!this->world->init())
 		this->exit = true;
+	this->home = new Home(this);
 }
 
 Game::~Game()
 {
 	for (auto object : this->objects)
 		delete object;
+	delete this->world;
+	delete this->home;
 }
 
 std::vector<GameObject*>& Game::getObjects()
@@ -68,9 +88,17 @@ void Game::Draw()
 
 void Game::Tick()
 {
-	this->world->update();
-	this->Update();
-	this->Draw();
+	if (this->home->isActive())
+	{
+		this->world->renderStars();
+		this->home->update();
+	}
+	else
+	{
+		this->world->update();
+		this->Update();
+		this->Draw();
+	}
 }
 
 void	Game::addScore(int score)

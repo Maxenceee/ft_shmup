@@ -52,6 +52,8 @@
 		"streambuf": "cpp",
 		"thread": "cpp",
 		"typeinfo": "cpp",
-		"iostream": "cpp"
+		"iostream": "cpp",
+		"codecvt": "cpp",
+		"iomanip": "cpp"
 	}
 }

@@ -3,12 +3,17 @@ NAME			=	ft_shmup
 SRCS_DIR 		=	srcs
 SRCS			=	$(shell find $(SRCS_DIR) -name "*.cpp")
 
-CFLAGS			=	-MMD -MP -I includes -g3 -std=c++17
 
 OUTDIR			=	.objs
 OBJECTS			=	$(patsubst $(SRCS_DIR)%.cpp, $(OUTDIR)%.o, $(SRCS))
 
+HEADERS_DIR		=	includes
+HEADERS			=	$(shell find $(HEADERS_DIR) -name "*.h")
+HEADERS_SOURCES	=	$(shell find $(SRCS_DIR) -name "*.h")
+
 DEPS_FILES		=	${OBJECTS:.o=.d}
+
+CFLAGS			=	-MMD -MP -I$(HEADERS_DIR) -g3 -std=c++17
 
 GREEN			=	\033[1;32m
 BLUE			=	\033[1;34m
@@ -22,15 +27,15 @@ all: $(NAME)
 
 -include $(DEPS_FILES)
 
-${NAME}: $(OBJECTS) 
-	@c++ $(CFLAGS) -lncursesw -o $(NAME) $(OBJECTS)
-	@echo "$(GREEN)$(NAME) compiled!$(DEFAULT)"
-
-$(OUTDIR)/%.o: $(SRCS_DIR)/%.cpp Makefile
+$(OUTDIR)/%.o: $(SRCS_DIR)/%.cpp $(HEADERS) $(HEADERS_SOURCES) Makefile
 	@mkdir -p $(@D)
 	@echo "$(YELLOW)Compiling [$<]$(DEFAULT)"
 	@c++ $(CFLAGS) -o $@ -c $<
 	@printf ${UP}${CUT}
+
+${NAME}: $(OBJECTS)
+	@c++ $(CFLAGS) -lncursesw -o $(NAME) $(OBJECTS)
+	@echo "$(GREEN)$(NAME) compiled!$(DEFAULT)"
 
 clean:
 	@echo "$(RED)Cleaning build folder$(DEFAULT)"

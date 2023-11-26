@@ -14,7 +14,7 @@ int	ft_can_render(void)
 
 	if (str_time == 0)
 		str_time = ft_abs_time();
-	if (ft_abs_time() - str_time >= 40)
+	if (ft_abs_time() - str_time >= 30)
 	{
 		str_time = ft_abs_time();
 		return (1);
@@ -28,6 +28,7 @@ void	init_color_pairs()
 	init_pair(MAIN_WIN_COLOR, COLOR_WHITE, COLOR_BLACK);
 	init_pair(HEARTS_PAIR, COLOR_RED, COLOR_BLACK);
 	init_pair(ENEMY_BULLET_PAIR, COLOR_RED, COLOR_BLACK);
+	init_pair(HOME_TITLE, COLOR_BLUE, COLOR_BLACK);
 }
 
 int	main(void)
@@ -56,7 +57,6 @@ int	main(void)
 		clear();
 		box(win_box, ACS_VLINE, ACS_HLINE);
 		game.Tick();
-		// wrefresh(win_box);
 		refresh();
 	}
 	delwin(stdscr);

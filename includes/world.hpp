@@ -6,7 +6,7 @@
 #include <filesystem>
 #include "collision_box.hpp"
 #include "position.hpp"
-#include "read_file.hpp"
+#include "../srcs/utils/read_file.hpp"
 #include "rock.hpp"
 
 namespace fs = std::filesystem;
@@ -37,4 +37,5 @@ public:
 	bool	init();
 	void	draw();
 	void	update();
+	void	renderStars();
 };
