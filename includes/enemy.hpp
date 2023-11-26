@@ -1,12 +1,10 @@
-#include "game_object.hpp"
+#include "shooter.hpp"
 
-class Enemy : public GameObject
+class Enemy : public Shooter
 {
 private:
     uint64_t ticks = 0;
-    uint64_t reward;
 public:
-    int health;
 
     Enemy();
     Enemy(Position position, CollisionBox bounding_box, Game *game, int health, int reward);
@@ -15,8 +13,4 @@ public:
     void update() override;
     void draw() override;
     bool shouldDelete() override;
-    bool isEnemy() override;
-    int getReward() const;
-
-    void shoot(Game *game);
 };

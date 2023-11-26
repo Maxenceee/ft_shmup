@@ -15,7 +15,7 @@ GameObject::~GameObject()
 {
 }
 
-bool    GameObject::isEnemy()
+bool    GameObject::isShooter()
 {
 	return (false);
 }
@@ -41,4 +41,9 @@ CollisionBox& GameObject::getBounds()
 Game *GameObject::getGame() const
 {
 	return (this->game);
+}
+
+ObjectTeam GameObject::getTeam() const
+{
+	return (this->team);
 }

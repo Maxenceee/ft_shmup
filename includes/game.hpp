@@ -18,6 +18,7 @@ private:
 	Position		offset;
 	int				score = 0;
 	World			*world;
+	int				tick = 0;
 
 	Player *player = nullptr;
 	std::vector<GameObject*> objects;
@@ -33,9 +34,12 @@ public:
 
 	std::vector<GameObject*>&	getObjects();
 
+	void	spawnEnemies();
+
 	void	addObject(GameObject *obj);
 	void	addScore(int score);
 
 	CollisionBox&	getBounds();
 	Position&		getOffset();
+	Player*			getPlayer() const;
 };

@@ -5,12 +5,19 @@
 
 class Game;
 
+enum class ObjectTeam
+{
+    PLAYER,
+    ENEMY,
+};
+
 class GameObject
 {
-private:
+protected:
     CollisionBox    bounding_box;
     Position        position;
     Game            *game;
+    ObjectTeam      team = ObjectTeam::ENEMY;
 
 public:
     GameObject();
@@ -21,7 +28,9 @@ public:
     virtual void    draw() = 0;
 
     virtual bool    shouldDelete() = 0;
-    virtual bool isEnemy();
+    virtual bool isShooter();
+
+    ObjectTeam      getTeam() const;
     bool collidesWith(GameObject *other);
     Position&       getPosition();
     CollisionBox&   getBounds();

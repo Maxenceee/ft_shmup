@@ -24,10 +24,10 @@ int	ft_can_render(void)
 
 void	init_color_pairs()
 {
-	// player 
 	init_pair(PLAYER_PAIR, COLOR_GREEN, COLOR_BLACK);
 	init_pair(MAIN_WIN_COLOR, COLOR_WHITE, COLOR_BLACK);
 	init_pair(HEARTS_PAIR, COLOR_RED, COLOR_BLACK);
+	init_pair(ENEMY_BULLET_PAIR, COLOR_RED, COLOR_BLACK);
 }
 
 int	main(void)
@@ -47,9 +47,8 @@ int	main(void)
 	std::srand(time(nullptr));
 	WINDOW *win_box = subwin(stdscr, LINES - 4, COLS - 10, 2, 5);
 
-	Game game(CollisionBox(COLS, LINES - 1), Position(2, 5));
-	game.addObject(new Player(Position(10, 10), &game, 100));
-	game.addObject(new Enemy(Position(30, 0), CollisionBox(1, 1), &game, 1, 200));
+	Game game(CollisionBox(COLS - 10, LINES - 4), Position(5, 2));
+	game.addObject(new Enemy(Position(30, 1), CollisionBox(1, 1), &game, 1, 200));
 	while (!game.exit)
 	{
 		if (!ft_can_render())
