@@ -39,7 +39,7 @@ private:
 	std::vector<GameObject*> objects;
 	std::vector<GameObject*> objects_to_add;
 
-	Boss	*current_boss;
+	Boss	*current_boss = nullptr;
 
 	void	Update();
 	void	Draw();

@@ -41,6 +41,8 @@ Game::~Game()
 	this->stopGame();
 	delete this->world;
 	delete this->home;
+	if (this->current_boss)
+		delete this->current_boss;
 }
 
 std::vector<GameObject*>& Game::getObjects()
