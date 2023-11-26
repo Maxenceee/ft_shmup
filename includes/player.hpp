@@ -1,12 +1,10 @@
 #pragma once
 
-#include <game_object.hpp>
+#include <shooter.hpp>
 
-class Player : public GameObject
+class Player : public Shooter
 {
 private:
-	int health;
-	int invincibility = 0;
 
 public:
 	Player();
@@ -16,7 +14,4 @@ public:
 	void	update() override;
 	void	draw() override;
 	bool	shouldDelete() override;
-
-	int		getHealth() const;
-	void	shoot(Game *game);
 };

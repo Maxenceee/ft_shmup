@@ -5,30 +5,34 @@
 Enemy::Enemy()
 {
     this->health = 1;
-    this->reward = 0;
+    this->killreward = 0;
 }
-Enemy::Enemy(Position position, CollisionBox bounding_box, Game *game, int health, int reward) : GameObject(position, bounding_box, game)
+Enemy::Enemy(Position position, CollisionBox bounding_box, Game *game, int health, int reward) : Shooter(position, bounding_box, game, health, 0, ObjectTeam::ENEMY)
 {
     this->health = health;
-    this->reward = reward;
+    this->killreward = reward;
 }
 
 Enemy::~Enemy()
 {
 }
 
-bool Enemy::isEnemy() {
-    return (true);
-}
-
 void Enemy::update()
 {
+    Shooter::update();
     this->ticks++;
     if (ticks % 15 == 0)
         this->getPosition().setY(this->getPosition().getY() + 1);
     
     if (ticks % 30 == 0)
         this->getPosition().setX(this->getPosition().getX() + rand() % 3 - 1);
+
+    if (ticks % 40 == 0)
+    {
+        Position bullet_pos = this->getPosition();
+        bullet_pos.setY(bullet_pos.getY() + 1);
+        this->shoot(this->getGame(), bullet_pos, 1, 1);
+    }
 }
 
 void Enemy::draw()
@@ -43,14 +47,4 @@ void Enemy::draw()
 bool Enemy::shouldDelete()
 {
     return (this->health <= 0 || this->getPosition().getY() >= this->getGame()->getBounds().getHeight() - 1);
-}
-
-int Enemy::getReward() const
-{
-    return (this->reward);
-}
-
-void Enemy::shoot(Game *game)
-{
-    game->addObject(new Bullet(Position(this->getPosition().getX(), this->getPosition().getY() + 1), game, 1, -1));
 }

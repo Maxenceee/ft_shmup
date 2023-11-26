@@ -10,7 +10,7 @@ private:
     int direction;
 public:
     Bullet();
-    Bullet(Position position, Game *game, int damage, int dir = 1);
+    Bullet(Position position, Game *game, int damage, ObjectTeam team, int dir = 1);
     ~Bullet();
 
     void update() override;

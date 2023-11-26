@@ -13,15 +13,15 @@ World::World(Position pos, CollisionBox bounds): position(pos), bounds(bounds)
 			mvprintw(y, i, ".");
 		}
 	}
-	if (!parse_rocks("./assets/rocks"))
-	{
-		std::cerr << "Could not find assets directory" << std::endl;
-		/**
-		 * TODO:
-		 * Remove exit and end game well
-		 */
-		exit(1);
-	}
+	// if (!parse_rocks("./assets/rocks"))
+	// {
+	// 	std::cerr << "Could not find assets directory" << std::endl;
+	// 	/**
+	// 	 * TODO:
+	// 	 * Remove exit and end game well
+	// 	 */
+	// 	exit(1);
+	// }
 }
 
 World::~World()
