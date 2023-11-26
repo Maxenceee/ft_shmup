@@ -1,5 +1,6 @@
 #pragma once
 
+#include <ncurses.h>
 #include "collision_box.hpp"
 #include "position.hpp"
 
@@ -14,5 +15,6 @@ public:
 	Rock(Position pos, std::string *buff);
 	~Rock();
 
-	void	draw();
+	void		draw();
+	Position	*getPosition();
 };

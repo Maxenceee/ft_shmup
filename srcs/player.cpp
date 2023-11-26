@@ -4,23 +4,6 @@
 #include "colors.hpp"
 #include "bullet.hpp"
 
-int get_key()
-{
-	int input = getch();
-	if (input == '\033')
-	{
-		getch();
-		switch (getch())
-		{
-		case 'A': return (KEY_UP);
-		case 'B': return (KEY_DOWN);
-		case 'C': return (KEY_RIGHT);
-		case 'D': return (KEY_LEFT);
-		}
-	}
-	return (input);
-}
-
 Player::Player() : Shooter()
 {
     this->team = ObjectTeam::PLAYER;
@@ -31,8 +14,8 @@ Player::Player(Position position, Game *game, int health) : Shooter(position, Co
 }
 Player::~Player()
 {
-	if (this->getGame()->getPlayer() == this)
-		this->getGame()->exit = 1;
+	// if (this->getGame()->getPlayer() == this)
+	// 	this->getGame()->exit = 1;
 }
 
 void Player::update()
@@ -43,7 +26,7 @@ void Player::update()
 	while (input != ERR) {
 		if (input == 27)
 		{
-			this->getGame()->exit = 1;
+			this->getGame()->stopGame();
 			return;
 		}
 		if (input == KEY_UP)

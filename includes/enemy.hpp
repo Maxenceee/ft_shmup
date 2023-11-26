@@ -11,7 +11,7 @@ public:
     Enemy(Position position, CollisionBox bounding_box, Game *game, int health, int reward);
     ~Enemy();
 
-    void update() override;
-    void draw() override;
-    bool shouldDelete() override;
+    void    update() override;
+    void    draw() override;
+    bool    shouldDelete() override;
 };

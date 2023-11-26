@@ -28,12 +28,12 @@ public:
     virtual void    draw() = 0;
 
     virtual bool    shouldDelete() = 0;
-    virtual bool isShooter();
+    virtual bool    isShooter();
 
     ObjectTeam      getTeam() const;
-    bool collidesWith(GameObject *other);
+    bool            collidesWith(GameObject *other);
     Position&       getPosition();
     CollisionBox&   getBounds();
-    Game *getGame() const;
+    Game            *getGame() const;
 };
 

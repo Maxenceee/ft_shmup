@@ -8,6 +8,7 @@ private:
 public:
     Position();
     Position(int x, int y);
+
     int getX() const;
     int getY() const;
 
