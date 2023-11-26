@@ -26,13 +26,11 @@ ${NAME}: $(OBJECTS)
 	@c++ $(CFLAGS) -lncursesw -o $(NAME) $(OBJECTS)
 	@echo "$(GREEN)$(NAME) compiled!$(DEFAULT)"
 
-$(OUTDIR)/%.o: $(SRCS_DIR)/%.cpp Makefile | $(OUTDIR)
+$(OUTDIR)/%.o: $(SRCS_DIR)/%.cpp Makefile
+	@mkdir -p $(@D)
 	@echo "$(YELLOW)Compiling [$<]$(DEFAULT)"
 	@c++ $(CFLAGS) -o $@ -c $<
 	@printf ${UP}${CUT}
-
-$(OUTDIR):
-	@mkdir -p $(OUTDIR)
 
 clean:
 	@echo "$(RED)Cleaning build folder$(DEFAULT)"

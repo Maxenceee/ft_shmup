@@ -1,11 +1,13 @@
 #pragma once
 
 #include <iostream>
-#include "position.hpp"
-#include "collision_box.hpp"
 #include <vector>
 #include <ncurses.h>
 #include <filesystem>
+#include "collision_box.hpp"
+#include "position.hpp"
+#include "read_file.hpp"
+#include "rock.hpp"
 
 namespace fs = std::filesystem;
 
@@ -22,9 +24,9 @@ private:
 
 	// std::vector<std::vector<int>>	map;
 	std::vector<Position*>	stars;
-	std::vector<std::pair<Position *, CollisionBox *>>	rocks;
+	std::vector<Rock *>		rocks;
 
-	std::vector<fs::path>	sprites;
+	std::vector<std::string>	sprites;
 
 	bool	parse_rocks(std::string path);
 

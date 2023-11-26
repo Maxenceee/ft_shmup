@@ -27,6 +27,8 @@ bool	World::init()
 			mvprintw(y, i, ".");
 		}
 	}
+	this->rocks.push_back(new Rock(Position(10, 10), &this->sprites[0]));
+	this->rocks[0]->draw();
 	return (true);
 }
 
@@ -43,7 +45,9 @@ bool	World::parse_rocks(std::string path)
 	{
 		if (entry.path().extension() != ".sprite")
 			continue ;
-		this->sprites.push_back(entry.path());
+		std::string	buff = read_file(entry.path());
+		std::cerr << buff << std::endl;
+		this->sprites.push_back(buff);
 		i++;
 	}
 	if (i == 0)
@@ -56,7 +60,7 @@ bool	World::parse_rocks(std::string path)
 
 void	World::update()
 {
-	for (int i = 0; i < COLS; i++)
+	for (int i = 0; i < COLS - this->game->getOffset().getY() * 2; i++)
 	{
 		// std::cerr << 1 + std::rand() / ((RAND_MAX + 1u) / 50) << std::endl;
 		if (1 + std::rand() / ((RAND_MAX + 1u) / 1000) == 1)
