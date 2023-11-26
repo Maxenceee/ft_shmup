@@ -10,16 +10,12 @@ World::~World()
 {
 	for (auto object : this->stars)
 		delete object;
-	for (auto object : this->rocks)
+	for (auto object : this->Sprites)
 		delete object;
 }
 
 bool	World::init()
 {
-	if (!this->parse_rocks("./assets/rocks"))
-	{
-		return (false);
-	}
 	for (int y = 0; y < LINES; y++)
 	{
 		for (int i = this->game->getOffset().getX() + 1; i < COLS - this->game->getOffset().getX() * 2; i++)
@@ -29,14 +25,14 @@ bool	World::init()
 			mvprintw(y, i, ".");
 		}
 	}
-	// this->rocks.push_back(new Rock(Position(10, 10), &this->sprites[0]));
-	// this->rocks.push_back(new Rock(Position(50, 10), &this->sprites[1]));
-	// this->rocks.push_back(new Rock(Position(100, 10), &this->sprites[2]));
-	// this->rocks.push_back(new Rock(Position(150, 10), &this->sprites[3]));
+	// this->Sprites.push_back(new Sprite(Position(10, 10), &this->sprites[0]));
+	// this->Sprites.push_back(new Sprite(Position(50, 10), &this->sprites[1]));
+	// this->Sprites.push_back(new Sprite(Position(100, 10), &this->sprites[2]));
+	// this->Sprites.push_back(new Sprite(Position(150, 10), &this->sprites[3]));
 	return (true);
 }
 
-bool	World::parse_rocks(std::string path)
+bool	World::parse_Sprites(std::string path)
 {
 	int	i = 0;
 
@@ -64,11 +60,11 @@ bool	World::parse_rocks(std::string path)
 void	World::update()
 {
 	this->renderStars();
-	if (1 + std::rand() / ((RAND_MAX + 1u) / this->rock_factor) == 1)
+	if (1 + std::rand() / ((RAND_MAX + 1u) / this->Sprite_factor) == 1)
 	{
-		std::cerr << "rock " << this->ticks << std::endl;
+		std::cerr << "Sprite " << this->ticks << std::endl;
 	}
-	for (auto r : this->rocks)
+	for (auto r : this->Sprites)
 	{
 		if (ticks % 15 == 1)
 			r->getPosition()->setY(r->getPosition()->getY() + 1);

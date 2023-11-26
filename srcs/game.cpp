@@ -31,6 +31,8 @@ Game::Game(CollisionBox bounding_box, Position pos, Position dims)
 	this->world = new World(this, this->offset);
 	if (!this->world->init())
 		this->exit = true;
+	if (!this->read_boss_sprite())
+		this->exit = true;
 	this->home = new Home(this);
 }
 
@@ -73,7 +75,8 @@ void	Game::Update()
 {
 	if (this->home->isActive())
 		return ;
-	spawnEnemies();
+	if (!this->has_boss)
+		spawnEnemies();
 	this->score += SCORE_MULTIPLIER;
 
 	auto it = this->objects.begin();
@@ -96,6 +99,7 @@ void	Game::Update()
 	}
 	this->getObjects().insert(this->getObjects().end(), this->objects_to_add.begin(), this->objects_to_add.end());
 	this->objects_to_add.clear();
+	this->spawnBoss();
 }
 
 void    Game::addObject(GameObject *obj)
@@ -131,6 +135,7 @@ void	Game::Draw()
 		return (m);
 	}();
 	mvprintw(LINES - 3, COLS - (16 + l), " Time: %d ", time);
+
 	for (auto object : this->objects)
 		object->draw();
 }
@@ -148,6 +153,7 @@ void	Game::Tick()
 		this->Update();
 		this->Draw();
 	}
+	tick++;
 }
 
 void	Game::addScore(int score)
@@ -179,7 +185,7 @@ Enemy*	Game::getRandomEnemy()
 {
 	int x = rand() % (this->getBounds().getWidth() - 4) + 2;
 	int y = 1;
-	int	factor = this->score > 1700 ? 1700 : (this->score + 1);
+	int	factor = this->score > 1100 ? 1100 : (this->score + 1);
 	int	rn = rand() % factor;
 
 	if (rn < 700)
@@ -188,17 +194,16 @@ Enemy*	Game::getRandomEnemy()
 		return (new DiagonalEnemy(Position(x, y), this, 1, dir));
 	}
 	else if (rn < 1000)
-		return (new Enemy(Position(x, y), CollisionBox(1, 1), this, 1, 1));
-	else if (rn < 1300)
+		return (new Enemy(Position(x, y), CollisionBox(1, 1), this, 1, 200));
+	else if (rn < 1050)
 		return (new DiagonalShootingEnemy(Position(x, y), this, 1));
-	else if (rn < 1700)
+	else if (rn < 1100)
 		return (new HatcherEnemy(Position(x, y), this, 1));
 	return (nullptr);
 }
 
 void	Game::spawnEnemies()
 {
-	tick++;
 	if (rand() % (score + 20) > tick)
 		return ;
 	tick-= 20;
@@ -207,6 +212,15 @@ void	Game::spawnEnemies()
 	Enemy *enemy = this->getRandomEnemy();
 	if (enemy)
 		this->addObject(enemy);
+}
+
+void	Game::spawnBoss()
+{
+	if (!this->has_boss && this->score % 100 == 1 && this->score > 100)
+	{
+		this->current_boss = new Boss(this, this->boss_buff, 1, this->score / 100);
+		this->addObject(this->current_boss);
+	}
 }
 
 bool	Game::checkDims(Position ndims)
@@ -229,4 +243,24 @@ void	Game::setExitMessage(std::string message)
 void	Game::printExit()
 {
 	std::cerr << this->exit_message << std::endl;
+}
+
+void	Game::hasBoss(bool has)
+{
+	this->has_boss = has;
+}
+
+int		Game::read_boss_sprite()
+{
+	fs::path	path = "./assets/boss/1.boss";
+	fs::path	sprite_bullet = "./assets/boss/boss_bullet.sprite";
+
+	if (!fs::exists(path) || !fs::exists(sprite_bullet))
+	{
+		this->setExitMessage(B_RED"Assets directory is missing or empty");
+		return (false);
+	}
+	this->bullet_sprite = read_file(sprite_bullet);
+	this->boss_buff = read_file(path);
+	return (true);
 }

@@ -4,7 +4,7 @@
 #include "collision_box.hpp"
 #include "position.hpp"
 
-class Rock
+class Sprite
 {
 private:
 	Position		position;
@@ -12,8 +12,8 @@ private:
 	std::string		*buff;
 
 public:
-	Rock(Position pos, std::string *buff);
-	~Rock();
+	Sprite(Position pos, std::string *buff);
+	~Sprite();
 
 	void		draw();
 	Position	*getPosition();

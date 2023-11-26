@@ -7,6 +7,7 @@ Enemy::Enemy()
 	this->health = 1;
 	this->killreward = 0;
 }
+
 Enemy::Enemy(Position position, CollisionBox bounding_box, Game *game, int health, int reward) : Shooter(position, bounding_box, game, health, 0, ObjectTeam::ENEMY)
 {
 	this->health = health;

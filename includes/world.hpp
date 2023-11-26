@@ -7,7 +7,7 @@
 #include "collision_box.hpp"
 #include "position.hpp"
 #include "../srcs/utils/read_file.hpp"
-#include "rock.hpp"
+#include "sprite.hpp"
 
 namespace fs = std::filesystem;
 
@@ -18,15 +18,15 @@ class World
 private:
 	Position		position;
 	uint64_t		ticks;
-	int				rock_factor = 1000;
+	int				Sprite_factor = 1000;
 	Game			*game;
 
-	std::vector<Position*>	stars;
-	std::vector<Rock *>		rocks;
+	std::vector<Position*>		stars;
+	std::vector<Sprite *>		Sprites;
 
 	std::vector<std::string>	sprites;
 
-	bool	parse_rocks(std::string path);
+	bool	parse_Sprites(std::string path);
 
 public:
 	World(Game *game, Position pos);

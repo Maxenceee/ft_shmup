@@ -7,7 +7,7 @@ DiagonalShootingEnemy::DiagonalShootingEnemy() : Enemy()
 {
 }
 
-DiagonalShootingEnemy::DiagonalShootingEnemy(Position position, Game *game, int health) : Enemy(position, CollisionBox(1, 1), game, health, 100)
+DiagonalShootingEnemy::DiagonalShootingEnemy(Position position, Game *game, int health) : Enemy(position, CollisionBox(1, 1), game, health, 500)
 {
 }
 

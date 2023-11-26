@@ -9,6 +9,8 @@
 #include "collision_box.hpp"
 #include "world.hpp"
 #include "home.hpp"
+#include "boss.hpp"
+#include "../srcs/utils/read_file.hpp"
 
 #define	SCORE_MULTIPLIER 1
 #define MAIN_WIN_COLOR 2
@@ -27,7 +29,8 @@ private:
 	Position		offset;
 	Position		dims;
 	int				score = 0;
-	int				tick = 0;
+	bool			has_boss = false;
+	std::string		boss_buff;
 	std::string		exit_message;
 
 	std::chrono::steady_clock::time_point	begin;
@@ -36,8 +39,12 @@ private:
 	std::vector<GameObject*> objects;
 	std::vector<GameObject*> objects_to_add;
 
+	Boss	*current_boss;
+
 	void	Update();
 	void	Draw();
+
+	int		read_boss_sprite();
 
 public:
 	Game(CollisionBox bounding_box, Position pos, Position dims);
@@ -46,11 +53,14 @@ public:
 	void	Tick();
 	bool	exit = false;
 	int		lastScore = 0;
+	int		tick = 0;
+	std::string		bullet_sprite;
 
 	std::vector<GameObject*>&	getObjects();
 
 	Enemy*	getRandomEnemy();
 	void	spawnEnemies();
+	void	spawnBoss();
 
 	void	addObject(GameObject *obj);
 	void	addScore(int score);
@@ -64,4 +74,6 @@ public:
 	void	startGame();
 	void	stopGame();
 	bool	checkDims(Position ndims);
+
+	void	hasBoss(bool has);
 };

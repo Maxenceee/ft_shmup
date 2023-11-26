@@ -1,21 +1,21 @@
-#include "rock.hpp"
+#include "sprite.hpp"
 
-Rock::Rock(Position pos, std::string *buff): position(pos), buff(buff)
+Sprite::Sprite(Position pos, std::string *buff): position(pos), buff(buff)
 {
 }
 
-Rock::~Rock()
+Sprite::~Sprite()
 {
 }
 
-void	Rock::draw()
+void	Sprite::draw()
 {
 	int	y = this->position.getY();
 	int	x = this->position.getX();
 
 	for (auto i : *this->buff)
 	{
-		dprintf(2, "c %c x=%d y=%d\n", i, x, y);
+		// dprintf(2, "c %c x=%d y=%d\n", i, x, y);
 		if (i == '\n')
 		{
 			y++;
@@ -30,7 +30,7 @@ void	Rock::draw()
 	}
 }
 
-Position	*Rock::getPosition()
+Position	*Sprite::getPosition()
 {
 	return (&this->position);
 }

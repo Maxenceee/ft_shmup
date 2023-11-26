@@ -6,9 +6,9 @@
 HatcherEnemy::HatcherEnemy()
 {
 }
-HatcherEnemy::HatcherEnemy(Position position, Game *game, int health) : Enemy(position, CollisionBox(1, 1), game, health, 0)
+
+HatcherEnemy::HatcherEnemy(Position position, Game *game, int health) : Enemy(position, CollisionBox(1, 1), game, health, 600)
 {
-	this->killreward = 200;
 }
 
 HatcherEnemy::~HatcherEnemy()
