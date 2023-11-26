@@ -35,7 +35,11 @@ bool	World::parse_rocks(std::string path)
 	if (!fs::exists(path))
 		return (false);
 	for (const auto & entry : fs::directory_iterator(path))
+	{
+		if (entry.path().extension() != ".sprite")
+			continue ;
 		std::cerr << entry.path() << std::endl;
+	}
 	return (true);
 }
 

@@ -21,6 +21,8 @@ private:
 	std::vector<Position*>	stars;
 	std::vector<std::pair<Position *, CollisionBox *>>	rocks;
 
+	std::vector<fs::path>	sprites;
+
 	bool	parse_rocks(std::string path);
 
 public:
