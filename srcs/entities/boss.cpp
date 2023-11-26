@@ -31,6 +31,7 @@ Boss::Boss(Game *game, std::string boss_buff, int damages, int life): damage(dam
 	this->game->hasBoss(true);
 	this->health = life;
 	this->tick = this->game->tick;
+	this->killreward = 1000;
 }
 
 Boss::~Boss()
