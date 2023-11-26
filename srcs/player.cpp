@@ -6,7 +6,7 @@
 
 Player::Player() : Shooter()
 {
-    this->team = ObjectTeam::PLAYER;
+	this->team = ObjectTeam::PLAYER;
 }
 Player::Player(Position position, Game *game, int health) : Shooter(position, CollisionBox(5, 3), game, health, 4, ObjectTeam::PLAYER)
 {
@@ -20,14 +20,14 @@ Player::~Player()
 
 void Player::update()
 {
-    Shooter::update();
+	Shooter::update();
 	int input = get_key();
 
 	while (input != ERR) {
 		if (input == 27)
 		{
 			this->getGame()->stopGame();
-			return;
+			return ;
 		}
 		if (input == KEY_UP)
 			this->getPosition().setY(this->getPosition().getY() - 1);
@@ -44,32 +44,37 @@ void Player::update()
 			this->shoot(this->getGame(), bullet_pos, 1, Position(0, -1));
 		}
 
-        if (this->getPosition().getX() < 1)
-            this->getPosition().setX(1);
-        else if (this->getPosition().getX() >= this->getGame()->getBounds().getWidth() - 2)
-            this->getPosition().setX(this->getGame()->getBounds().getWidth() - 3);
-        else if (this->getPosition().getY() < 1)
-            this->getPosition().setY(1);
-        else if (this->getPosition().getY() >= this->getGame()->getBounds().getHeight() - 1)
-            this->getPosition().setY(this->getGame()->getBounds().getHeight() - 2);
+		if (this->getPosition().getX() < 1)
+			this->getPosition().setX(1);
+		else if (this->getPosition().getX() >= this->getGame()->getBounds().getWidth() - 2)
+			this->getPosition().setX(this->getGame()->getBounds().getWidth() - 3);
+		else if (this->getPosition().getY() < 1)
+			this->getPosition().setY(1);
+		else if (this->getPosition().getY() >= this->getGame()->getBounds().getHeight() - 1)
+			this->getPosition().setY(this->getGame()->getBounds().getHeight() - 2);
 
-        input = get_key();
-    }
+		input = get_key();
+	}
 }
 
 bool Player::shouldDelete()
 {
-	if (this->health <= 0)
-		return (true);
 	return (false);
+}
+
+void	Player::damage(int damage)
+{
+	Shooter::damage(damage);
+	if (this->health <= 0)
+		this->getGame()->stopGame();
 }
 
 void Player::draw()
 {
-    if (invincibility > 0 && invincibility % 2 == 0)
-        return;
-    int x = this->getPosition().getX() + this->getGame()->getOffset().getX();
-    int y = this->getPosition().getY() + this->getGame()->getOffset().getY();
+	if (invincibility > 0 && invincibility % 2 == 0)
+		return ;
+	int x = this->getPosition().getX() + this->getGame()->getOffset().getX();
+	int y = this->getPosition().getY() + this->getGame()->getOffset().getY();
 
 	attron(COLOR_PAIR(PLAYER_PAIR));
 	mvprintw(y, x, "🛸");

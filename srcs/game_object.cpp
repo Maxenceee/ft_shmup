@@ -16,17 +16,14 @@ GameObject::~GameObject()
 {
 }
 
-bool    GameObject::isShooter()
+bool	GameObject::isShooter()
 {
 	return (false);
 }
 
-bool    GameObject::collidesWith(GameObject *other)
+bool	GameObject::collidesWith(GameObject *other)
 {
-	if (this->getPosition().getX() == other->getPosition().getX()
-		&& this->getPosition().getY() == other->getPosition().getY())
-		return (true);
-	return (false);
+	return (other->getPosition().getX() <= this->getPosition().getX() && other->getPosition().getX() + other->getBounds().getWidth() >= this->getPosition().getX() || other->getPosition().getX() >= this->getPosition().getX() && other->getPosition().getX() <= this->getPosition().getX() + this->getBounds().getWidth()) && (other->getPosition().getY() <= this->getPosition().getY() && other->getPosition().getY() + other->getBounds().getHeight() >= this->getPosition().getY() || other->getPosition().getY() >= this->getPosition().getY() && other->getPosition().getY() <= this->getPosition().getY() + this->getBounds().getHeight());
 }
 
 Position& GameObject::getPosition()

@@ -26,11 +26,10 @@ int get_key()
 Game::Game(CollisionBox bounding_box, Position pos)
 {
 	this->bounding_box = bounding_box;
-    this->offset = pos;
-    this->world = new World(this, this->offset, bounding_box);
+	this->offset = pos;
+	this->world = new World(this, this->offset, bounding_box);
 	if (!this->world->init())
 		this->exit = true;
-	begin = std::chrono::steady_clock::now();
 	this->home = new Home(this);
 }
 
@@ -48,6 +47,7 @@ std::vector<GameObject*>& Game::getObjects()
 
 void	Game::startGame()
 {
+	begin = std::chrono::steady_clock::now();
 	this->player = new Player(Position(this->bounding_box.getWidth() / 2, this->bounding_box.getHeight() - 3), this, 10);
 	this->addObject(this->player);
 	this->home->setActive(false);
@@ -59,8 +59,10 @@ void	Game::stopGame()
 		delete object;
 	for (auto object : this->objects_to_add)
 		delete object;
+	this->player = nullptr;
 	this->objects.clear();
 	this->objects_to_add.clear();
+	this->lastScore = this->score;
 	this->score = 0;
 	this->tick = 0;
 	this->home->setActive(true);
@@ -80,6 +82,8 @@ void	Game::Update()
 		{
 			delete *it;
 			it = this->objects.erase(it);
+			if (this->home->isActive())
+				return ;
 		}
 		else
 		{
@@ -100,16 +104,30 @@ void    Game::addObject(GameObject *obj)
 
 void Game::Draw()
 {
-    for (auto object : this->objects)
-        object->draw();
-    attron(COLOR_PAIR(HEARTS_PAIR));
-    for (int i = 0; i < this->player->getHealth(); i++)
-    {
-        mvprintw(LINES - 1, COLS / 2 - 1 + i, "❤️");
-    }
-    attroff(COLOR_PAIR(HEARTS_PAIR));
-    mvprintw(LINES - 1, 2, "Score: %d", this->score);
-    mvprintw(LINES - 1, COLS - 9, "Time: %d", (std::chrono::steady_clock::now() - begin).count() / 1000000000);
+	for (auto object : this->objects)
+		object->draw();
+	if (!this->player)
+		return ;
+	attron(COLOR_PAIR(HEARTS_PAIR));
+	for (int i = 0; i < this->player->getHealth(); i++)
+	{
+		mvprintw(LINES - 3, (COLS - this->player->getHealth()) / 2 + i, "❤️");
+	}
+	attroff(COLOR_PAIR(HEARTS_PAIR));
+	mvprintw(LINES - 3, 7, "Score: %d", this->score);
+	int time = (std::chrono::steady_clock::now() - begin).count() / 1000000000;
+	int	l = [=]()
+	{
+		int	t = time;
+		int	m = 0;
+		while (t >= 10)
+		{
+			t /= 10;
+			m++;
+		}
+		return (m);
+	}();
+	mvprintw(LINES - 3, COLS - (14 + l), "Time: %d", time);
 }
 
 void Game::Tick()
@@ -134,17 +152,22 @@ void	Game::addScore(int score)
 
 Position& Game::getOffset()
 {
-    return (this->offset);
+	return (this->offset);
 }
 
 CollisionBox& Game::getBounds()
 {
-    return (this->bounding_box);
+	return (this->bounding_box);
 }
 
 Player* Game::getPlayer() const
 {
 	return (this->player);
+}
+
+Home*	Game::getHome() const
+{
+	return (this->home);
 }
 
 Enemy*	Game::getRandomEnemy()
@@ -172,7 +195,7 @@ void	Game::spawnEnemies()
 {
 	tick++;
 	if (rand() % (score + 20) > tick)
-		return;
+		return ;
 	tick-= 20;
 	if (tick < 0)
 		tick = 0;

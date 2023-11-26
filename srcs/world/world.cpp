@@ -50,7 +50,6 @@ bool	World::parse_rocks(std::string path)
 		if (entry.path().extension() != ".sprite")
 			continue ;
 		std::string	buff = read_file(entry.path());
-		//std::cerr << buff << std::endl;
 		this->sprites.push_back(buff);
 		i++;
 	}
@@ -79,7 +78,6 @@ void	World::update()
 
 void	World::renderStars()
 {
-	std::cerr << this->ticks << std::endl;
 	for (int i = this->game->getOffset().getX() + 1; i < COLS - this->game->getOffset().getX() * 2; i++)
 	{
 		if (1 + std::rand() / ((RAND_MAX + 1u) / 1000) == 1)

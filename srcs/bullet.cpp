@@ -40,18 +40,20 @@ void	Bullet::checkCollision()
 			victim->damage(this->damage);
 			this->damage = 0;
 		}
+		if (this->getGame()->getHome()->isActive())
+			return ;
 	}
 }
 
 void Bullet::draw()
 {
-    int x = this->getPosition().getX() + this->getGame()->getOffset().getX();
-    int y = this->getPosition().getY() + this->getGame()->getOffset().getY();
+	int x = this->getPosition().getX() + this->getGame()->getOffset().getX();
+	int y = this->getPosition().getY() + this->getGame()->getOffset().getY();
 	if (this->getPosition().getX() < 0 || this->getPosition().getX() >= this->getGame()->getBounds().getWidth())
-        return;
-    if (this->getPosition().getY() >= this->getGame()->getBounds().getHeight() - 1)
-        return;
-    if (this->team == ObjectTeam::ENEMY)
+		return ;
+	if (this->getPosition().getY() >= this->getGame()->getBounds().getHeight() - 1)
+		return ;
+	if (this->team == ObjectTeam::ENEMY)
 		attron(COLOR_PAIR(ENEMY_BULLET_PAIR));
 	if (direction.getX() == 0)
 		mvprintw(y, x, "|");
@@ -67,13 +69,13 @@ void Bullet::draw()
 
 bool Bullet::shouldDelete()
 {
-    if (this->damage <= 0)
-        return (true);
-    if (this->direction.getY() > 0 && \
-        this->getPosition().getY() > this->getGame()->getBounds().getHeight() - this->getGame()->getOffset().getY() - 1)
-        return (true);
-    else if (this->direction.getY() < 0 && \
-        this->getPosition().getY() < 2)
-        return (true);
-    return (false);
+	if (this->damage <= 0)
+		return (true);
+	if (this->direction.getY() > 0 && \
+		this->getPosition().getY() > this->getGame()->getBounds().getHeight() - this->getGame()->getOffset().getY() - 1)
+		return (true);
+	else if (this->direction.getY() < 0 && \
+		this->getPosition().getY() < 2)
+		return (true);
+	return (false);
 }

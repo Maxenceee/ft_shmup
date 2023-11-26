@@ -27,7 +27,6 @@ private:
 	Position		offset;
 	int				score = 0;
 	int				tick = 0;
-	World			*world;
 	std::string		exit_message;
 	std::chrono::steady_clock::time_point begin;
 
@@ -44,6 +43,7 @@ public:
 
 	void	Tick();
 	bool	exit = false;
+	int		lastScore = 0;
 
 	std::vector<GameObject*>&	getObjects();
 
@@ -56,6 +56,7 @@ public:
 	CollisionBox&	getBounds();
 	Position&		getOffset();
 	Player*			getPlayer() const;
+	Home*			getHome() const;
 	void	printExit();
 	void	setExitMessage(std::string message);
 	void	startGame();

@@ -10,6 +10,7 @@ protected:
     int reset_invincibility = 0;
     int killreward = 0;
     int health;
+
 public:
 
     Shooter();
@@ -18,10 +19,10 @@ public:
 
     virtual void	update() override;
     virtual bool    shouldDelete() override;
+    virtual void    damage(int damage);
 
     bool    isShooter() override;
 
-    void    damage(int damage);
     int		getHealth() const;
     int		getKillReward() const;
     void	shoot(Game *game, Position bullet_pos, int damage, Position dir);
