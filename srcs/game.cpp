@@ -77,3 +77,42 @@ void	Game::addScore(int score)
 {
 	this->score += score;
 }
+
+Position& Game::getOffset()
+{
+    return (this->offset);
+}
+
+CollisionBox& Game::getBounds()
+{
+    return (this->bounding_box);
+}
+
+Player* Game::getPlayer() const
+{
+	return (this->player);
+}
+
+void	Game::spawnEnemies()
+{
+	if (tick++ != 120)
+		return;
+	tick = 0;
+	int nb_enemies = rand() % score / 3000 + 1;
+	for (int i = 0; i < nb_enemies; i++)
+	{
+		int x = rand() % (this->getBounds().getWidth() - 2) + 1;
+		int y = 1;
+		this->addObject(new Enemy(Position(x, y), CollisionBox(1, 1), this, 1, 10));
+	}
+}
+
+void	Game::setExitMessage(std::string message)
+{
+	this->exit_message = message;
+}
+
+void	Game::printExit()
+{
+	std::cerr << this->exit_message << std::endl;
+}
