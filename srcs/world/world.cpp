@@ -1,9 +1,23 @@
 #include "world.hpp"
+#include "game.hpp"
 
-World::World(Position pos, CollisionBox bounds): position(pos), bounds(bounds)
+World::World(Game *game, Position pos, CollisionBox bounds): game(game), position(pos), bounds(bounds)
 {
 	this->ticks = 0;
+}
 
+World::~World()
+{
+	for (auto object : this->stars)
+		delete object;
+}
+
+bool	World::init()
+{
+	if (!this->parse_rocks("./assets/rocks"))
+	{
+		return (false);
+	}
 	for (int y = 0; y < LINES; y++)
 	{
 		for (int i = 0; i < COLS; i++)
@@ -13,35 +27,40 @@ World::World(Position pos, CollisionBox bounds): position(pos), bounds(bounds)
 			mvprintw(y, i, ".");
 		}
 	}
-	// if (!parse_rocks("./assets/rocks"))
-	// {
-	// 	std::cerr << "Could not find assets directory" << std::endl;
-	// 	/**
-	// 	 * TODO:
-	// 	 * Remove exit and end game well
-	// 	 */
-	// 	exit(1);
-	// }
-}
-
-World::~World()
-{
-	for (auto object : this->stars)
-		delete object;
+	this->rocks.push_back(new Rock(Position(10, 10), &this->sprites[0]));
+	this->rocks[0]->draw();
+	return (true);
 }
 
 bool	World::parse_rocks(std::string path)
 {
+	int	i = 0;
+
 	if (!fs::exists(path))
+	{
+		this->game->setExitMessage(B_RED"Could not find assets directory");
 		return (false);
+	}
 	for (const auto & entry : fs::directory_iterator(path))
-		std::cerr << entry.path() << std::endl;
+	{
+		if (entry.path().extension() != ".sprite")
+			continue ;
+		std::string	buff = read_file(entry.path());
+		std::cerr << buff << std::endl;
+		this->sprites.push_back(buff);
+		i++;
+	}
+	if (i == 0)
+	{
+		this->game->setExitMessage(B_RED"Assets directory is empty");
+		return (false);
+	}
 	return (true);
 }
 
 void	World::update()
 {
-	for (int i = 0; i < COLS; i++)
+	for (int i = 0; i < COLS - this->game->getOffset().getY() * 2; i++)
 	{
 		// std::cerr << 1 + std::rand() / ((RAND_MAX + 1u) / 50) << std::endl;
 		if (1 + std::rand() / ((RAND_MAX + 1u) / 1000) == 1)

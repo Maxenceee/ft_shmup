@@ -52,7 +52,6 @@
 		"streambuf": "cpp",
 		"thread": "cpp",
 		"typeinfo": "cpp",
-		"iostream": "cpp",
-		"__node_handle": "cpp"
+		"iostream": "cpp"
 	}
 }

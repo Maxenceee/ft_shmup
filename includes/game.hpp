@@ -8,8 +8,10 @@
 #include "collision_box.hpp"
 #include "world.hpp"
 
-#define SCORE_MULTIPLIER 1
+#define	SCORE_MULTIPLIER 1
 #define MAIN_WIN_COLOR 2
+
+#define B_RED		"\033[1;31m"
 
 class Game
 {
@@ -19,16 +21,19 @@ private:
 	int				score = 0;
 	World			*world;
 	int				tick = 0;
+	std::string		exit_message;
 
 	Player *player = nullptr;
 	std::vector<GameObject*> objects;
 	std::vector<GameObject*> objects_to_add;
+
 	void Update();
 	void Draw();
 
 public:
 	Game(CollisionBox bounding_box, Position pos, uint32_t nb_player = 1);
 	~Game();
+
 	void	Tick();
 	bool	exit = false;
 
@@ -42,4 +47,6 @@ public:
 	CollisionBox&	getBounds();
 	Position&		getOffset();
 	Player*			getPlayer() const;
+	void	printExit();
+	void	setExitMessage(std::string message);
 };

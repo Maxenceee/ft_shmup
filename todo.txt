@@ -3,7 +3,7 @@
 - afficher score, temps, vie
 - peut tirer 
 - collisions entites/bordures
-
+👽
 
 // player 
 
