@@ -65,5 +65,6 @@ int	main(void)
 	delwin(stdscr);
 	endwin();
 	curs_set(1);
+	game.printExit();
 	return (0);
 }

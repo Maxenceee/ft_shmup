@@ -9,6 +9,8 @@
 
 namespace fs = std::filesystem;
 
+class Game;
+
 class World
 {
 private:
@@ -16,6 +18,7 @@ private:
 	CollisionBox	bounds;
 	uint64_t		ticks;
 	int				rock_factor = 1000;
+	Game			*game;
 
 	// std::vector<std::vector<int>>	map;
 	std::vector<Position*>	stars;
@@ -26,9 +29,10 @@ private:
 	bool	parse_rocks(std::string path);
 
 public:
-	World(Position pos, CollisionBox bounds);
+	World(Game *game, Position pos, CollisionBox bounds);
 	~World();
 
+	bool	init();
 	void	draw();
 	void	update();
 };

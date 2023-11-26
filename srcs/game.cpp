@@ -5,7 +5,9 @@ Game::Game(CollisionBox bounding_box, uint32_t nb_player)
 {
 	this->bounding_box = bounding_box;
 	// this->offset_y = nb_player;
-	this->world = new World(this->offset, CollisionBox(LINES - 4, COLS - 10));
+	this->world = new World(this, this->offset, bounding_box);
+	if (!this->world->init())
+		this->exit = true;
 }
 
 Game::~Game()
@@ -63,4 +65,14 @@ void Game::Tick()
 void	Game::addScore(int score)
 {
 	this->score += score;
+}
+
+void	Game::setExitMessage(std::string message)
+{
+	this->exit_message = message;
+}
+
+void	Game::printExit()
+{
+	std::cerr << this->exit_message << std::endl;
 }
