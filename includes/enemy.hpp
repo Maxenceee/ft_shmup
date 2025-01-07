@@ -1,5 +1,6 @@
 #pragma once
 #include "shooter.hpp"
+#include <cstdint>
 
 class Enemy : public Shooter
 {

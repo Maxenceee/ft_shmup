@@ -8,7 +8,7 @@ Position	max_size(std::string buff)
 	int	x = 0;
 	int	y = 0;
 
-	for (int i = 0; i < buff.length(); i++)
+	for (unsigned int i = 0; i < buff.length(); i++)
 	{
 		if (buff[i] == '\n')
 		{

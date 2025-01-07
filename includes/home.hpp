@@ -32,7 +32,7 @@ class Home
 {
 private:
 	bool	is_active = true;
-	int		current = 0;
+	uint32_t	current = 0;
 	Game	*game;
 
 	std::vector<HButton *>	buttons;

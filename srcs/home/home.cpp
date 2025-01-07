@@ -32,7 +32,7 @@ void	Home::update()
 	else if (input == '\n')
 		this->buttons[this->current]->action();
 	
-	for (int i = 0; i < this->buttons.size(); i++)
+	for (uint32_t i = 0; i < this->buttons.size(); i++)
 	{
 		this->buttons[i]->setSelected(i == this->current);
 	}

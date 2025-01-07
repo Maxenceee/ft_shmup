@@ -1,7 +1,7 @@
 #include "world.hpp"
 #include "game.hpp"
 
-World::World(Game *game, Position pos): game(game), position(pos)
+World::World(Game *game, Position pos): position(pos), game(game)
 {
 	this->ticks = 0;
 }
